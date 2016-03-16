@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Gestion de Torneos</title>
+
+<!-- Bootstrap Core CSS -->
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+
+<link href="css/miestilo.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<script type="text/javascript" lang="JavaScript">
+function validarDatos(){
+	var usuario = document.getElementById("login");
+	var pass = document.getElementById("password");
+	if((usuario.value == "" || usuario.value == '' || usuario.value == null || usuario.value == "Usuario") && (pass.value == "" || pass.value == '' || pass.value == null || pass.value == "Password"))
+	{
+		alert("Ingrese su usuario y password");
+		usuario.focus();
+		return false;
+	} 
+	else if(usuario.value == "" || usuario.value == '' || usuario.value == null || usuario.value == "Usuario")
+	{
+		alert("Ingrese su usuario");
+		usuario.focus();
+		return false;
+	}
+	else if(pass.value == "" || pass.value == '' || pass.value == null || pass.value == "Password")
+	{
+		alert("Ingrese su password");
+		pass.focus();
+		return false;
+	}
+	else 
+	{
+		return true;
+	}
+	
+					}
+function carga(){
+	document.getElementById("login").focus();
+				}
+</script>
+
+</head>
+
+<body onload="carga();">
+
+	<header>
+		<div id="subheader">
+			<div id="logotipo">
+				<p>
+					<a href="">Natacion</a>
+				</p>
+			</div>
+
+		</div>
+	</header>
+
+	<section id="wrap">
+		<section id="wrapper">
+			<!-- Sidebar -->
+
+
+			<section>
+
+				<h1>Ingresar al Sistema de Gestion de Torneos</h1>
+				<form action="login" method="POST"">
+					<p>
+						<input type="text" name="login" id="login" placeholder="Usuario">
+					</p>
+					<p>
+						<input type="password" name="password" id="password"
+							placeholder="Password">
+					</p>
+					<p class="remember_me">
+						<label> <input type="checkbox" name="remember_me"
+							id="remember_me"> Recordar usuario
+						</label>
+					</p>
+					<p>
+						<input type="submit" value="Login">
+					</p>
+				</form>
+
+			</section>
+
+		</section>
+	</section>
+
+
+	<!-- /#wrapper -->
+
+	<!-- jQuery -->
+	<script src="js/jquery.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- Menu Toggle Script -->
+	<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+</body>
+
+</html>
