@@ -25,22 +25,25 @@
 <body>
 
 <header>
-    <div id="subheader">
+	<div id="subheader">
         <div id="logotipo"><p><a href="PaginaPpal.jsp">Natacion</a></p></div>
             <nav>
                 <ul>
-                    <li><a href="PaginaPpal.html">Inicio</a></li>
+                    <li><a href="PaginaPpal.jsp">Inicio</a></li>
                     <li><a href="Ingresar.html">Ingresar</a></li>
                     <li><a href="">Contacto</a></li>
                 </ul>    
             </nav>
-    </div>
+    </div> 
+
     <div id="menu">
         <script type="text/javascript"> $("#menu").load("Menu.html"); </script>
     </div>
 </header>
 <%@ include file="Menu.html"%>
+<Section>
 
+</Section>
 
 
     <script src="js/jquery.js"></script>

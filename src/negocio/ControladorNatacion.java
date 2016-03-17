@@ -98,7 +98,7 @@ public class ControladorNatacion
 				return cn.buscarNadadorPorDni(dni);
 			}
 //PreInscripcion			
-			public ArrayList<NadadorCarreraIndividual> buscarNadadoresInscriptosACarreraIndividual(Carrera car,int nroTorneo){
+			public ArrayList<Nadador> buscarNadadoresInscriptosACarreraIndividual(Carrera car,int nroTorneo){
 				return cpi.buscarNadadoresInscriptosACarreraIndividual(car, nroTorneo, torneoActual.getFecha());
 			}
 			public ArrayList<Nadador> buscarNadadoresNoInscriptosACarreraIndividual(Carrera car,int nroTorneo){

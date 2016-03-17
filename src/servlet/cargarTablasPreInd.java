@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,20 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entidades.Carrera;
+import entidades.Nadador;
 import entidades.Torneo;
 import negocio.ControladorNatacion;
 
 /**
- * Servlet implementation class ElegirTorneo
+ * Servlet implementation class cargarTablasPreInd
  */
-@WebServlet("/btnDefinirTorneo")
-public class BtnDefinirTorneo extends HttpServlet {
+@WebServlet("/selCarrera")
+public class cargarTablasPreInd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BtnDefinirTorneo() {
+    public cargarTablasPreInd() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,26 +42,16 @@ public class BtnDefinirTorneo extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.getAttribute("torneo");
+		// TODO Auto-generated method stub
+		Carrera carSel = (Carrera)request.getAttribute("cbCarrera");
 		HttpSession session = request.getSession(false);
-		String torneoString = request.getParameter("torneo");
-		int nroTorneo=-1;
-		if(torneoString.charAt(6) == ' ')
-		{
-			 nroTorneo = Character.getNumericValue(torneoString.charAt(5));
-		}
-			else if(torneoString.charAt(7) == ' ')
-			{
-				 nroTorneo = Character.getNumericValue(torneoString.charAt(5)+torneoString.charAt(6));
-			}else if(torneoString.charAt(8) == ' ')
-					{
-						 nroTorneo = Character.getNumericValue(torneoString.charAt(5)+torneoString.charAt(6)+torneoString.charAt(7));
-					}
-		Torneo t = ControladorNatacion.getInstance().buscarTorneo(nroTorneo);
-		session.setAttribute("torneo", t);
-		response.sendRedirect("PaginaPpal.jsp");
-		
+		int nroTorneo =  ((Torneo)session.getAttribute("torneo")).getNroTorneo();
+		ArrayList<Nadador> nadadoresNoInsc = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carSel, nroTorneo);
+		ArrayList<Nadador> nadadoresInsc = ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carSel, nroTorneo);
+		session.setAttribute("nadNoInsc", nadadoresNoInsc);
+		session.setAttribute("nadInsc", nadadoresInsc);
+		//response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
+		request.getRequestDispatcher("PreInscripcionCarreraIndividual.jsp").forward(request, response);	
 	}
 
 }
