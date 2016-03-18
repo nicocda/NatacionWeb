@@ -1,6 +1,10 @@
 package servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,22 +45,21 @@ public class BtnDefinirTorneo extends HttpServlet {
 		
 		request.getAttribute("torneo");
 		HttpSession session = request.getSession(false);
-		String torneoString = request.getParameter("torneo");
-		int nroTorneo=-1;
-		if(torneoString.charAt(6) == ' ')
-		{
-			 nroTorneo = Character.getNumericValue(torneoString.charAt(5));
-		}
-			else if(torneoString.charAt(7) == ' ')
-			{
-				 nroTorneo = Character.getNumericValue(torneoString.charAt(5)+torneoString.charAt(6));
-			}else if(torneoString.charAt(8) == ' ')
-					{
-						 nroTorneo = Character.getNumericValue(torneoString.charAt(5)+torneoString.charAt(6)+torneoString.charAt(7));
-					}
+		int nroTorneo = Integer.parseInt(request.getParameter("torneo"));
 		Torneo t = ControladorNatacion.getInstance().buscarTorneo(nroTorneo);
 		session.setAttribute("torneo", t);
-		response.sendRedirect("PaginaPpal.html");
+		Date date;
+		String stringCorto="";
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(t.getFecha());
+			 stringCorto = new SimpleDateFormat("dd/MM/yyyy").format(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		t.setFecha(stringCorto);
+		ControladorNatacion.getInstance().setTorneoActual(t);
+		response.sendRedirect("PaginaPpal.jsp");
 		
 	}
 

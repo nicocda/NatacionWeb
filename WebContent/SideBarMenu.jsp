@@ -14,23 +14,23 @@
 </head>
 <body>
   <!-- Acá tiene que ir el wrapper, pero del lado de afuera -->
-  <div id="sidebar-wrapper" class="col-md-1">
-            <div id="sidebar">
+  <div id="sidebar-wrapper" class="col-md-1" style="background: #252932">
+            <div id="sidebar" >
                 <ul class="nav list-group">
                     <li>
-                        <a class="list-group-item" href="#"><i class="icon-home icon-1x"></i>Gestión General</a>
+                        <a id="fondo" href="MenuDefinirTorneo">Gestión Torneo</a>
                     </li>
                     <li>
-                        <a class="list-group-item" href="PreInscripcionCarreraIndividual.jsp"><i class="icon-home icon-1x"></i>Pre-inscripciones</a>
+                        <a id="fondo" href="PreInscripciones.jsp">Pre-inscripciones</a>
                     </li>
                     <li>
-                        <a class="list-group-item" href="#"><i class="icon-home icon-1x"></i>Tiempos</a>
+                        <a id="fondo" href="#">Tiempos</a>
                     </li>
                     <li>
-                        <a class="list-group-item" href="ABMNadador.jsp"><i class="icon-home icon-1x"></i>Editar</a>
+                        <a id="fondo" href="ABMNadador.jsp"></i>Editar</a>
                     </li>
                     <li>
-                        <a class="list-group-item" href="#"><i class="icon-home icon-1x"></i>Cronómetro</a>
+                        <a id="fondo" href="#">Cronómetro</a>
                     </li>
                 </ul>
             </div>

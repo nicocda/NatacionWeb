@@ -70,10 +70,7 @@
 						</form>
 					 </div>
 						
-						 	<div class="col-md-12 footer">
-				              <!-- Abajo de este tag va el footer -->
-				              <ul class="nav navbar-nav"><li><a href="">Link</a></li><li><a href="">Link</a></li><li><a href="">Link</a></li></ul>
-				            </div>
+						
 			</div>
 	</div>
 </body>

@@ -28,10 +28,10 @@
 </head>
 
 <body>
-	<%@ include file = "PaginaPpal.jsp" %>
+	<%@ include file = "Header.jsp"%>
+<div id = "wrapper">
 
-	<section id="wrap">
-		<section id="wrapper">
+	<%@ include file = "SideBarMenu.jsp"%>
 
 			
 			<!-- /#sidebar-wrapper -->
@@ -133,15 +133,10 @@
 
 
 
-
+</div>
 			<!-- /#page-content-wrapper -->
 
 
-		</section>
-
-
-
-	</section>
 
 
 	<!-- /#wrapper -->

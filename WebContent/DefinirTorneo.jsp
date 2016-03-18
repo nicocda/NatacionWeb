@@ -30,23 +30,27 @@
 </head>
 
 <body>
-	<%@ include file = "PaginaPpal.jsp" %>
+	<%@ include file = "Header.jsp"%>
+<div id = "wrapper">
 
-	<section id="wrap"> <section id="wrapper"> <!-- Sidebar -->
+	<%@ include file = "SideBarMenu.jsp"%>
 	
 
-	<div class="row">
-
-		<div class="col-md-12">
+	
+	<%@ include file = "SideBarMenu.jsp"%>
+	<div id="main-wrapper" class="col-md-11 pull-right">
+	            <div id="main">
+	             <div class="page-header">
+		                <h3><label>Seleccione un Torneo con el cual trabajar:</label></h3>
+		              </div>
 
 			<form action="btnDefinirTorneo" method="POST" name="formTorneo">
 				<% ArrayList<Torneo> listaTorneos =(ArrayList<Torneo>) session.getAttribute("listaTorneos"); %>
-				<label>Seleccione un Torneo con el cual trabajar:</label> <select
-					id="torneo" name="torneo">
+ 				<select id="torneo" name="torneo">
 					<% for(int i=0; i < listaTorneos.size(); i++)
                     	{
                     	%>
-					<option value="<%= listaTorneos.get(i).toString() %>"><%= listaTorneos.get(i).toString() %></option>
+					<option value="<%= listaTorneos.get(i).getNroTorneo() %>"><%= listaTorneos.get(i).toString() %></option>
 					<%
                     	}
                         %>
@@ -63,7 +67,7 @@
 
 	</div>
 
-	</section> </section>
+	</div>
 
 	<!-- /#sidebar-wrapper -->
 

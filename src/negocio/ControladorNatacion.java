@@ -526,6 +526,7 @@ public class ControladorNatacion
 				return torneoActual;
 			}
 			public void setTorneoActual(Torneo torneoActual) {
+				
 				this.torneoActual = torneoActual;
 			}
 			public int nroTorneo(){
@@ -534,6 +535,10 @@ public class ControladorNatacion
 			public boolean buscarUsuario(String usuario, String password) 
 			{
 				return CatalogoUsuario.getInstance().buscarUsuario(usuario, password);
+			}
+			public Carrera buscarCarrera(int nroCarrera) {
+				// TODO Auto-generated method stub
+				return (CatalogoCarreras.getInstance().buscarCarrera(nroCarrera));
 			}
 			
 			

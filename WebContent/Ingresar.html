@@ -63,22 +63,7 @@ function carga(){
 
 <body onload="carga();">
 
-	<header>
-    <div id="subheader">
-        <div id="logotipo"><p><a href="PaginaPpal.jsp">Natacion</a></p></div>
-            <nav>
-                <ul>
-                    <li><a href="PaginaPpal.jsp">Inicio</a></li>
-                    <li><a href="Ingresar.html">Ingresar</a></li>
-                    <li><a href="">Contacto</a></li>
-                </ul>    
-            </nav>
-    </div> 
-
-    <div id="menu">
-        <script type="text/javascript"> $("#menu").load("Menu.html"); </script>
-    </div>
-</header>
+	
 
 	<section id="wrap">
 		<section id="wrapper">
@@ -86,14 +71,16 @@ function carga(){
 
 
 			<section>
-
-				<h1>Ingresar al Sistema de Gestion de Torneos</h1>
+				  <div class="page-header">
+		               <h1>Ingresar al Sistema de Gestion de Torneos</h1>
+		              </div>
+				
 				<form action="login" method="POST">
 					<p>
-						<input type="text" name="login" id="login" placeholder="Usuario">
+						<input type="text" name="login" class="txtBox" placeholder="Usuario">
 					</p>
 					<p>
-						<input type="password" name="password" id="password"
+						<input type="password" name="password" class="txtBox" id="password"
 							placeholder="Password">
 					</p>
 					<p class="remember_me">
@@ -102,7 +89,7 @@ function carga(){
 						</label>
 					</p>
 					<p>
-						<input type="submit" value="Login">
+						<input type="submit" class="botones" value="Login">
 					</p>
 				</form>
 

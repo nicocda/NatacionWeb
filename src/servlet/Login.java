@@ -51,11 +51,11 @@ public class Login extends HttpServlet {
 				//inicializo la sesion
 				HttpSession session = request.getSession(true);
 				session.setAttribute("existeUsuario", ingreso);
-				request.getRequestDispatcher("PaginaPpal.jsp").forward(request, response);
+				request.getRequestDispatcher("MenuDefinirTorneo").forward(request, response);
 			}
 			else
 			{
-				response.sendRedirect("Ingresar.html");
+				response.sendRedirect("ingresar.html");
 			}
 		
 	}

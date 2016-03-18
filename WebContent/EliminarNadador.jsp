@@ -14,10 +14,10 @@
 <title>Gestion de Torneos</title></head>
 <body>
 <!-- Menú Herencia Visual -->
-	<%@ include file = "NuevoHeader.jsp"%>
+	<%@ include file = "Header.jsp"%>
 	
 <div id="wrapper">
-	<%@ include file = "NuevaInterfaz.jsp"%>
+	<%@ include file = "SideBarMenu.jsp"%>
 		<div id="main-wrapper" class="col-md-11 pull-right">
 	            <div id="main">
 		              <!-- Abajo de este tag Título -->
@@ -44,10 +44,7 @@
 					</form>
 				</div>
 				
-						<div class="col-md-12 footer">
-				              <!-- Abajo de este tag va el footer -->
-				              <ul class="nav navbar-nav"><li><a href="">Link</a></li><li><a href="">Link</a></li><li><a href="">Link</a></li></ul>
-				        </div>
+						
 	       </div>
        </div>
 				      

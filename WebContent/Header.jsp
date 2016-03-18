@@ -14,22 +14,19 @@
 </head>
 <body>
 
-<div id="header" class="navbar navbar-default navbar-fixed-top">
+<div id="header" class="navbar navbar-default navbar-fixed-top" style="background: #252932">
     <div class="navbar-header">
         <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
             <i class="icon-reorder"></i>
         </button>
-        <a class="navbar-brand" href="#">
-            Natación
-        </a>
     </div>
-    <nav class="collapse navbar-collapse">
+    <nav class="collapse navbar-collapse" style="padding-left:110px;">
         <ul class="nav navbar-nav">
             <li>
-                <a href="Ingresar.html">Página Principal</a>
+                <a href="PaginapPpal.jsp" id="fondo">Página Principal</a>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hola<b class="caret"></b></a>
+              <a href="#" id="fondo" class="dropdown-toggle" data-toggle="dropdown">Hola<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Nico</a></li>
                 </ul>
@@ -41,12 +38,12 @@
                 </ul>
             </li>
             <li>
-                <a href="#">Contacto</a>
+                <a href="#" id="fondo">Contacto</a>
             </li>
         </ul>
         <ul class="nav navbar-nav pull-right">
             <li class="dropdown">
-                <a href="#" id="nbAcctDD" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Username<i class="icon-sort-down"></i></a>
+                <a href="#" id="fondo" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>Username<i class="icon-sort-down"></i></a>
                 <ul class="dropdown-menu pull-right">
                     <li><a href="#">Log Out</a></li>
                 </ul>

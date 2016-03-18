@@ -11,7 +11,7 @@
 <!-- Custom CSS -->
 <link rel="stylesheet" href="css/miestilo.css">
 
-<title>Gestion de Torneos</title>
+<title>Administración de PreInscripciones</title>
 </head>
 <body>
 
@@ -28,15 +28,12 @@
 	              	  
 	              	  <!-- Abajo de este tag va el contenido -->
 	              	  
-	              	  	<form id= "form" action ="ABMNadador" method ="post">
-							<input class = "botones" type = "submit" name = "nuevo" value="Nuevo Nadador"> 
-							<input class = "botones" type = "submit" name = "editar" value="Editar Nadador"> 
-							<input class = "botones" type = "submit" name = "eliminar" value="Eliminar Nadador"> 
+	              	  	<form id= "form" action ="PreInscripcion" method ="post">
+							<input class = "botones" type = "submit" name = "individual" value="PreInscripción a Carrera Individual"> 
+							<input class = "botones" type = "submit" name = "Posta" value="PreInscripción a Carrera por Posta">
+							<input class = "botones" type = "submit" name = "Reporte" value="Generar Reporte de PreInscripciones"> 
 						</form>
 	           	</div>
-	           
-	        
-	          
 	        </div>
 
 </div>
