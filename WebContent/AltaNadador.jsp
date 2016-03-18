@@ -18,17 +18,18 @@
 <body>
 
 	<!-- Menú Herencia Visual -->
-	<%@ include file = "PaginaPpal.jsp" %>
+	<%@ include file = "Header.jsp"%>
 	
 <div id="wrapper">
-	
-	<div id="page-content-wrapper">
-		<div class="container-fluid">
-			<div class = "row">
-				<div class = "col-lg-12">
-					<center>
-						<H2>Crear nuevo nadador</H2>
-					</center>
+	<%@ include file = "SideBarMenu.jsp"%>
+		<div id="main-wrapper" class="col-md-11 pull-right">
+	            <div id="main">
+		              <!-- Abajo de este tag Título -->
+		              <div class="page-header">
+		                <h3>Crear nuevo nadador</h3>
+		              </div>
+						
+						<!-- Abajo de este tag va el contenido -->
 						<form id= "form" action ="ABMNadador" method ="post">
 							<input type = "text" name = "txtDNI" class = "txtBox" value = "" placeholder = "Ingrese DNI del nadador">
 							<input type = "text" name = "txtNombre" class = "txtBox" value = "" placeholder = "Ingrese nombre del nadador">
@@ -58,9 +59,13 @@
 							<input type = "submit" name = "btnCancelar" class = "botones" value = "Cancelar">
 						</form>
 					</div>
-				</div>
+					
+				<div class="col-md-12 footer">
+	              <!-- Abajo de este tag va el footer -->
+	              <ul class="nav navbar-nav"><li><a href="">Link</a></li><li><a href="">Link</a></li><li><a href="">Link</a></li></ul>
+	            </div>
 			</div>
-	</div>
+
 </div>
 
 </body>

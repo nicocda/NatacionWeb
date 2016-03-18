@@ -31,7 +31,7 @@ public class CatalogoPreInscripcion {
 		}
 		return instance;
 	}
-	public ArrayList<NadadorCarreraIndividual> buscarNadadoresInscriptosACarreraIndividual(Carrera car, int nroTorneo, String fechaTorneo) 	
+	public ArrayList<Nadador> buscarNadadoresInscriptosACarreraIndividual(Carrera car, int nroTorneo, String fechaTorneo) 	
 	{	
 		//CON ESTE CRITERIO:
 		//TipoCarrera 6 -> Edad == 6
@@ -41,7 +41,7 @@ public class CatalogoPreInscripcion {
 		//TipoCarrera 14 -> Edad == 14
 		//TipoCarrera 15 -> Edad >= 15
 		
-		ArrayList<NadadorCarreraIndividual> listaNadadores = new ArrayList<NadadorCarreraIndividual>();
+		ArrayList<Nadador> listaNadadores = new ArrayList<Nadador>();
 		String sql;
 		if(car.getTipoCarrera() == 6)
 		{
@@ -142,12 +142,22 @@ public class CatalogoPreInscripcion {
 			
 				while(rs.next())
 				{					
-					NadadorCarreraIndividual nadador = new NadadorCarreraIndividual();
-					nadador.setNroCarrera(rs.getInt("nroCarrera"));									
-					nadador.setDniNadador(rs.getInt("dni"));
-					nadador.setNroPrograma(rs.getInt("nroPrograma"));
-					nadador.setNroTorneo(rs.getInt(nroTorneo));
-					nadador.setTiempoPreCompeticion(rs.getString("tiempoPreCompeticion"));
+					Nadador nadador = new Nadador();
+					String fechaCorta=null;
+					
+					try {
+						Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("fechaNacimiento"));
+						 fechaCorta = new SimpleDateFormat("dd/MM/yyyy").format(date);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					
+					nadador.setDni(rs.getInt("dni"));
+					nadador.setNombre(rs.getString("nombre"));
+					nadador.setApellido(rs.getString("apellido"));
+					nadador.setFechaNacimiento(fechaCorta);
+					nadador.setNroClub(rs.getInt("nroClub"));
+					nadador.setSexo(rs.getString("sexo").charAt(0));
 					listaNadadores.add(nadador);
 				}
 				
@@ -885,4 +895,3 @@ public class CatalogoPreInscripcion {
 		
 		
 	}
-
