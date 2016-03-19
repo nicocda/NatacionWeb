@@ -229,6 +229,58 @@ public class CatalogoNadadores {
 		return ln;
 	}
 	
+	public ArrayList<Nadador> buscarTodosNadadores(int paginaInicio, int nroPorPagina)
+	{
+		ArrayList<Nadador> ln = new ArrayList<Nadador>();
+
+		String sql="Select * from Nadador limit ? , ? ";
+		PreparedStatement sentencia=null;
+		ResultSet rs = null;
+		Connection con = DataConnection.getInstancia().getConn();
+		try
+		{
+			sentencia= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			sentencia.setInt(1, paginaInicio);
+			sentencia.setInt(2, nroPorPagina);
+			rs=sentencia.executeQuery();
+				while (rs.next())
+				{	
+					Nadador nad = new Nadador();
+					Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("fechaNacimiento"));
+					String stringCorto = new SimpleDateFormat("dd/MM/yyyy").format(date);
+					nad.setApellido(rs.getString("apellido"));
+					nad.setDni(rs.getInt("dni"));
+					nad.setFechaNacimiento(stringCorto);
+					nad.setNombre(rs.getString("nombre"));
+					nad.setNroClub(rs.getInt("nroClub"));
+					nad.setSexo(rs.getString("sexo").charAt(0));
+					ln.add(nad);
+				}
+				
+				}
+		
+		catch(SQLException | ParseException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(sentencia!=null && !sentencia.isClosed())
+				{
+					sentencia.close();
+				}
+				DataConnection.getInstancia().CloseConn();
+			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}		
+		return ln;
+	}
+	
 	public ArrayList<Nadador> buscarTodosNadadores()
 	{
 		ArrayList<Nadador> ln = new ArrayList<Nadador>();

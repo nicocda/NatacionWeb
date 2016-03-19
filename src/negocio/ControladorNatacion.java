@@ -82,6 +82,10 @@ public class ControladorNatacion
 				return cn.buscarTodosNadadores();
 			}
 			
+			public ArrayList<Nadador> buscarTodosNadadores(int paginaInicio, int nroPorPagina) 
+			{
+				return cn.buscarTodosNadadores(paginaInicio, nroPorPagina);
+			}
 			
 			public void eliminarNadador(int dni)
 			{
@@ -127,7 +131,12 @@ public class ControladorNatacion
 			{
 				return CatalogoPreInscripcion.getInstance().buscarTodosEquipoPosta(car, nroTorneo);
 			}
-
+			
+			//para la lista web
+			public ArrayList<Nadador> buscarNadadoresInscriptosACarreraIndividual(Carrera car, int nroTorneo, int index, int nroPag)
+			{
+				return CatalogoPreInscripcion.getInstance().buscarNadadoresInscriptosACarreraIndividual(car, nroTorneo, index, nroPag);
+			}
 			
 //Torneo
 			public ArrayList<Torneo> buscarTorneos()
