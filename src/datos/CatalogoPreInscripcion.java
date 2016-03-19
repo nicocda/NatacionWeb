@@ -166,37 +166,25 @@ public class CatalogoPreInscripcion {
 		if(car.getTipoCarrera() == 6)
 		{
 			sql = "SELECT * FROM nadador "
-					+ "where cast (strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) <= 6 and dni not in "
-					+ "(SELECT n.dni FROM preinscripcionindividual nc "
-					+ "inner join nadador n on n.dni = nc.nroNadador "
-					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
+					+ "where cast (strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) <= 6 and sexo= ? and dni not in "
+					+ "(SELECT nc.nroNadadr FROM preinscripcionindividual nc "
+					+ "where nroCarrera = ? and nroTorneo = ?) "
 					+ "order by nroClub, apellido";
 		}
-		else if (car.getTipoCarrera() < 13 && car.getTipoCarrera() >= 7)
-		{
-			sql = "SELECT * FROM nadador where "
-					+ "cast(strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) = ? and dni not in "
-					+ "(SELECT n.dni FROM preinscripcionindividual nc "
-					+ "inner join nadador n on n.dni = nc.nroNadador "
-					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
-					+ "order by nroClub, apellido";
-		}
-		else if(car.getTipoCarrera() == 13 || car.getTipoCarrera() == 14)
+		else if (car.getTipoCarrera() < 15 && car.getTipoCarrera() >= 7)
 		{
 			sql = "SELECT * FROM nadador "
-					+ "where (cast(strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) ==13 or cast(strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) ==14) and dni not in "
-					+ "(SELECT n.dni FROM preinscripcionindividual nc "
-					+ "inner join nadador n on n.dni = nc.nroNadador "
-					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
+					+ "where cast (strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) = ? and sexo= ? and dni not in "
+					+ "(SELECT nc.nroNadadr FROM preinscripcionindividual nc "
+					+ "where nroCarrera = ? and nroTorneo = ?) "
 					+ "order by nroClub, apellido";
 		}
 		else
 		{
 			sql = "SELECT * FROM nadador "
-					+ "where cast (strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) >= 15 and dni not in "
-					+ "(SELECT n.dni FROM preinscripcionindividual nc "
-					+ "inner join nadador n on n.dni = nc.nroNadador "
-					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
+					+ "where cast (strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) >= 15 and sexo= ? and dni not in "
+					+ "(SELECT nc.nroNadadr FROM preinscripcionindividual nc "
+					+ "where nroCarrera = ? and nroTorneo = ?) "
 					+ "order by nroClub, apellido";
 		}
 		PreparedStatement sentencia=null;
@@ -213,43 +201,20 @@ public class CatalogoPreInscripcion {
 			Date d = new SimpleDateFormat("dd/MM/yyyy").parse(fechaTorneo);
 			fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(d);
 
-			if(car.getTipoCarrera() == 6)
-			{
-				sentencia.setString(1, fecha);
-				sentencia.setInt(2, car.getNroCarrera());
-				sentencia.setInt(3, car.getNroPrograma());
-				sentencia.setInt(4, nroTorneo);
-				sentencia.setInt(5, car.getNroCarrera());
-				sentencia.setInt(6, car.getNroPrograma());
-			}
-			else if (car.getTipoCarrera() < 13 && car.getTipoCarrera() > 6)
+			if (car.getTipoCarrera() < 15 && car.getTipoCarrera() > 6)
 			{
 				sentencia.setString(1, fecha);
 				sentencia.setInt(2, car.getTipoCarrera());
-				sentencia.setInt(3, car.getNroCarrera());
-				sentencia.setInt(4, car.getNroPrograma());
+				sentencia.setInt(3, car.getSexo());
 				sentencia.setInt(5, nroTorneo);
-				sentencia.setInt(6, car.getNroCarrera());
-				sentencia.setInt(7, car.getNroPrograma());
-			}
-			else if(car.getTipoCarrera() == 13 || car.getTipoCarrera() == 14)
-			{
-				sentencia.setString(1, fecha);
-				sentencia.setString(2, fecha);
-				sentencia.setInt(3, car.getNroCarrera());
-				sentencia.setInt(4, car.getNroPrograma());
-				sentencia.setInt(5, nroTorneo);
-				sentencia.setInt(6, car.getNroCarrera());
-				sentencia.setInt(7, car.getNroPrograma());
+				sentencia.setInt(4, car.getNroCarrera());
 			}
 			else
 			{
 				sentencia.setString(1, fecha);
-				sentencia.setInt(2, car.getNroCarrera());
-				sentencia.setInt(3, car.getNroPrograma());
+				sentencia.setInt(2, car.getSexo());
 				sentencia.setInt(4, nroTorneo);
-				sentencia.setInt(5, car.getNroCarrera());
-				sentencia.setInt(6, car.getNroPrograma());
+				sentencia.setInt(3, car.getNroCarrera());
 			}
 			rs = sentencia.executeQuery();
 			
