@@ -44,7 +44,8 @@ public class PreInscripcion extends HttpServlet {
 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
-		Torneo torActual =  (Torneo) session.getAttribute("torneo");
+		//Torneo torActual =  (Torneo) session.getAttribute("torneo");
+		Torneo torActual = ControladorNatacion.getInstance().getTorneoActual();
 		ControladorNatacion cn = new ControladorNatacion();
 		int nroPrograma = torActual.getNroPrograma();
 		int nroTorneo = torActual.getNroTorneo();
@@ -64,7 +65,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		{
 			
 			int nroCarrera =Integer.parseInt(request.getParameter("cbCarrera"));
-			Carrera carSel = cn.buscarCarrera(nroCarrera);
+			Carrera carSel = cn.buscarCarrera(nroCarrera, nroPrograma);
 			session.setAttribute("carSel", carSel);
 			ArrayList<Nadador> nadadoresNoInsc = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carSel, nroTorneo);
 			ArrayList<Nadador> nadadoresInsc = ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carSel, nroTorneo);

@@ -48,9 +48,7 @@
 	<div id="main-wrapper" class="col-md-11 pull-right">
 		<div id="main">
 			<div class = "row">
-				<div class = "col-lg-12">
-
-					
+				<div class = "col-lg-12">	
 						<div class='col-lg-12'>
 						<%
 						Torneo torActual =  (Torneo) session.getAttribute("torneo");
@@ -59,6 +57,7 @@
 						%>
 							<label>Carrera:</label>
 							<select id = "cbCarrera" class = "comboBox" <%if(session.getAttribute("carSel") != null) {%> value="<%=session.getAttribute("carSel")%>"<% } %>>
+								<option selected disabled><<--Seleccione una carrera de la lista -->></option>
 								<% 
 				            	for(Carrera c : carreras)
 				            	{           	
@@ -66,17 +65,20 @@
 				            		<option value="<%= c.getNroCarrera()%>"><%= c%> </option>           		
 				            	<%
 				            	}
-				            	%>						
-				            </select>
-						
-						<button id = "play" class="botones">Seleccionar Carrera</button>
+				            	%>		
+				            </select>				
 						</div>
+						<div class="col-md-6">
+							<div id = "NadadoresNoInscriptos" ></div>
+						</div>
+						
 						<div class="col-md-6">
 							<div id = "PersonTableContainer" ></div>
 						</div>
 						
-						<div class="col-md-6">
-							<!-- La otra tabla -->
+						<div class="col-md-12">
+							<br>
+							<button class = "botones">Generar Series</button>
 						</div>
 				</div>
 			</div>

@@ -2,33 +2,35 @@ package servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
+
 import entidades.Carrera;
 import entidades.Nadador;
 import entidades.Torneo;
 import negocio.ControladorNatacion;
 
-@WebServlet("/PruebaGrilla")
-public class PruebaGrilla extends HttpServlet {
+
+@WebServlet("/CargarGrillaNoInscriptosAIndividual")
+public class CargarGrillaNoInscriptosAIndividual extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-    public PruebaGrilla() 
+    public CargarGrillaNoInscriptosAIndividual() 
     {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		try
 		{
@@ -44,9 +46,9 @@ public class PruebaGrilla extends HttpServlet {
 				Carrera carSel = ControladorNatacion.getInstance().buscarCarrera(nroCarrera, nroPrograma);
 				Torneo torActual =  ControladorNatacion.getInstance().getTorneoActual();
 	
-				ln = ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carSel, torActual.getNroTorneo(), paginaInicio, nroPorPagina);
+				ln = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carSel, torActual.getNroTorneo(), paginaInicio, nroPorPagina);
 				
-				int nroNadadores = ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carSel, torActual.getNroTorneo()).size();
+				int nroNadadores = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carSel, torActual.getNroTorneo()).size();
 				
 				Gson gson = new Gson();
 				

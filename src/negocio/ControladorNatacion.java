@@ -138,6 +138,11 @@ public class ControladorNatacion
 				return CatalogoPreInscripcion.getInstance().buscarNadadoresInscriptosACarreraIndividual(car, nroTorneo, index, nroPag);
 			}
 			
+			public ArrayList<Nadador> buscarNadadoresNoInscriptosACarreraIndividual(Carrera car,int nroTorneo, int paginaInicio, int nroPagina)
+			{
+				return cpi.buscarNadadoresNoInscriptosACarreraIndividual(car, nroTorneo, torneoActual.getFecha(), paginaInicio, nroPagina);
+			}
+			
 //Torneo
 			public ArrayList<Torneo> buscarTorneos()
 			{
@@ -545,9 +550,8 @@ public class ControladorNatacion
 			{
 				return CatalogoUsuario.getInstance().buscarUsuario(usuario, password);
 			}
-			public Carrera buscarCarrera(int nroCarrera) {
-				// TODO Auto-generated method stub
-				return (CatalogoCarreras.getInstance().buscarCarrera(nroCarrera));
+			public Carrera buscarCarrera(int nroCarrera, int nroPrograma) {
+				return (CatalogoCarreras.getInstance().buscarCarrera(nroCarrera, nroPrograma));
 			}
 			
 			

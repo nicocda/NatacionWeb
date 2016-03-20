@@ -41,8 +41,9 @@ public class BtnDefinirTorneo extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		/*
 		request.getAttribute("torneo");
 		HttpSession session = request.getSession(false);
 		int nroTorneo = Integer.parseInt(request.getParameter("torneo"));
@@ -60,7 +61,11 @@ public class BtnDefinirTorneo extends HttpServlet {
 		t.setFecha(stringCorto);
 		ControladorNatacion.getInstance().setTorneoActual(t);
 		response.sendRedirect("PaginaPpal.jsp");
-		
+		*/
+		int nroTorneo = Integer.parseInt(request.getParameter("torneo"));
+		Torneo torneoActual = ControladorNatacion.getInstance().buscarTorneo(nroTorneo);
+		ControladorNatacion.getInstance().setTorneoActual(torneoActual);
+		response.sendRedirect("PaginaPpal.jsp");
 	}
 
 }

@@ -175,13 +175,15 @@ public class CatalogoTorneos {
 			rs=sentencia.executeQuery();
 			if(rs.next())
 			{
-				t.setFecha(rs.getString("fechaTorneo"));
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("fechaTorneo"));
+				String stringCorto = new SimpleDateFormat("dd/MM/yyyy").format(date);
+				t.setNroTorneo(rs.getInt("nroTorneo"));
 				t.setNroClub(rs.getInt("nroClub"));
 				t.setNroPrograma(rs.getInt("nroPrograma"));
-				t.setNroTorneo(nroTorneo);
+				t.setFecha(stringCorto);
 			}
 		}
-		catch(SQLException e)
+		catch(SQLException | ParseException e)
 		{
 			e.printStackTrace();
 		}

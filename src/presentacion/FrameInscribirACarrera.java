@@ -31,6 +31,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.JTextField;
 
 public class FrameInscribirACarrera extends JInternalFrame implements InternalFrameListener 
@@ -220,7 +222,8 @@ public class FrameInscribirACarrera extends JInternalFrame implements InternalFr
 	{
 		Carrera carreraSeleccionada = (Carrera)cbCarreras.getSelectedItem();
 		tablaNadadoresInscriptos.setModel(UtilidadesEscritorio.crearModeloTabla(ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carreraSeleccionada, ControladorNatacion.getInstance().getTorneoActual().getNroTorneo())));		
-		tablaNadadoresNoInscriptos.setModel(UtilidadesEscritorio.crearModeloTabla(ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carreraSeleccionada, ControladorNatacion.getInstance().getTorneoActual().getNroTorneo())));		
+		ArrayList<entidades.Nadador> ln = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carreraSeleccionada, ControladorNatacion.getInstance().getTorneoActual().getNroTorneo());
+		tablaNadadoresNoInscriptos.setModel(UtilidadesEscritorio.crearModeloTabla(ln));		
 	}
 	
 	private void agregarNadadorACarrera(JComboBox<Carrera> cbCarreras)

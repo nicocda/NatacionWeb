@@ -255,9 +255,10 @@ public class CatalogoCarreras {
 		
 		return nroCarreraMaximo;
 	}
-	public Carrera buscarCarrera(int nroCarrera) {
+	public Carrera buscarCarrera(int nroCarrera, int nroPrograma) 
+	{
 		Carrera car = new Carrera();
-		String sql="select * from carrera where nroCarrera=?";
+		String sql="select * from carrera where nroCarrera=? and nroPrograma = ?";
 				PreparedStatement sentencia = null;
 		ResultSet rs= null;
 		Connection con = DataConnection.getInstancia().getConn();
@@ -265,6 +266,7 @@ public class CatalogoCarreras {
 		{
 			sentencia= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			sentencia.setInt(1, nroCarrera);
+			sentencia.setInt(2, nroPrograma);
 			rs=sentencia.executeQuery();
 			if(rs.next())
 			{
