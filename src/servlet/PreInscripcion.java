@@ -46,13 +46,13 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		HttpSession session = request.getSession(false);
 		//Torneo torActual =  (Torneo) session.getAttribute("torneo");
 		Torneo torActual = ControladorNatacion.getInstance().getTorneoActual();
-		ControladorNatacion cn = new ControladorNatacion();
+		
 		int nroPrograma = torActual.getNroPrograma();
 		int nroTorneo = torActual.getNroTorneo();
 		
 		if (request.getParameter("individual") != null) 
 		{
-			ArrayList <Carrera>  carreras= cn.buscarCarreraProgramaNoCargadas(nroPrograma, nroTorneo);
+			ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarCarreraProgramaNoCargadas(nroPrograma, nroTorneo);
 			session.setAttribute("carreras", carreras);
 		response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
 		}else if(request.getParameter("posta") != null)
@@ -65,7 +65,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		{
 			
 			int nroCarrera =Integer.parseInt(request.getParameter("cbCarrera"));
-			Carrera carSel = cn.buscarCarrera(nroCarrera, nroPrograma);
+			Carrera carSel = ControladorNatacion.getInstance().buscarCarrera(nroCarrera, nroPrograma);
 			session.setAttribute("carSel", carSel);
 			ArrayList<Nadador> nadadoresNoInsc = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carSel, nroTorneo);
 			ArrayList<Nadador> nadadoresInsc = ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carSel, nroTorneo);

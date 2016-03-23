@@ -24,7 +24,7 @@
                         <a id="fondo" href="PreInscripciones.jsp">Pre-inscripciones</a>
                     </li>
                     <li>
-                        <a id="fondo" href="#">Tiempos</a>
+                        <a name="menuTiempos" id="fondo" href="Tiempos">Tiempos</a>
                     </li>
                     <li>
                         <a id="fondo" href="ABMNadador.jsp"></i>Editar</a>

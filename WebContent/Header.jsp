@@ -38,7 +38,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#" id="fondo">Contacto</a>
+                <a href="Contacto.jsp" id="fondo">Contacto</a>
             </li>
         </ul>
         <ul class="nav navbar-nav pull-right">
