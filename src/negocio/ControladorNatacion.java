@@ -258,7 +258,7 @@ public class ControladorNatacion
 			{
 				int cantidadSeries;
 				int nroClub = ControladorNatacion.getInstance().getTorneoActual().getNroClub();
-				//San Martin de Pellegrini tiene nro club = 8.
+				//San Martin de Pellegrini tiene nro club = 8 (Solo tiene 5 andariveles).
 				if(nroClub == 8)
 				{		
 					if (numeroNadadores % 5 != 0)
@@ -284,105 +284,34 @@ public class ControladorNatacion
 					int nroNadadoresPorSerie = (int) numeroNadadores/cantidadSeries;
 					int restoNroNadadores = numeroNadadores % cantidadSeries;
 					int cont = 0;
-					int contSeries = 0;
-					
-					if(nroNadadoresPorSerie>=1)
+					int andarivel=3; //ingreso de adentro para afuera (3,4,2,5,1,6)
+					for(int j=1;j<=6;j++)
 					{
-						for (int i = 1; i <= cantidadSeries; i++)
+						if(nroNadadoresPorSerie>=j+1)
 						{
-							CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 3, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
+							for (int i = 1; i <= cantidadSeries; i++)
+							{
+								CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), andarivel, nroCarrera, nroPrograma, nroTorneo);
+								cont += 1;
+							}
 						}
-					}
-					else if(nroNadadoresPorSerie == 0)
-					{
-						for (int i = 1; i<=restoNroNadadores; i ++)
+						else if(nroNadadoresPorSerie == j)
 						{
-								CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 3, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
+							for (int i = 1; i<=restoNroNadadores; i ++)
+							{
+									CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), andarivel, nroCarrera, nroPrograma, nroTorneo);
+								cont += 1;
+							}
 						}
-					}
-					if(nroNadadoresPorSerie>=2)
-					{
-						for (int i = 1; i <= cantidadSeries; i++)
+						if(j%2 != 0)
 						{
-							CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 4, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
+							andarivel =+j;
 						}
-					}
-					else if(nroNadadoresPorSerie == 1)
-					{
-						for (int i = 1; i<=restoNroNadadores; i ++)
+						else
 						{
-								CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 4, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
+							andarivel =-j;
 						}
-					}
-					if(nroNadadoresPorSerie>=3)
-					{
-						for (int i = 1; i <= cantidadSeries; i++)
-						{
-							CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 2, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
-						}
-					}
-					else if(nroNadadoresPorSerie == 2)
-					{
-						for (int i = 1; i<=restoNroNadadores; i ++)
-						{
-								CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 2, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
-						}
-					}
-					if(nroNadadoresPorSerie>=4)
-					{
-						for (int i = 1; i <= cantidadSeries; i++)
-						{
-							CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 5, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
-						}
-					}
-					else if(nroNadadoresPorSerie == 3)
-					{
-						for (int i = 1; i<=restoNroNadadores; i ++)
-						{
-								CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 5, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
-						}
-					}
-					if(nroNadadoresPorSerie>=5)
-					{
-						for (int i = 1; i <= cantidadSeries; i++)
-						{
-							CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 1, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
-						}
-					}
-					else if(nroNadadoresPorSerie == 4)
-					{
-						for (int i = 1; i<=restoNroNadadores; i ++)
-						{
-								CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 1, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
-						}
-					}
-					if(nroNadadoresPorSerie>=6)
-					{
-						for (int i = 1; i <= cantidadSeries; i++)
-						{
-							CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 6, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
-						}
-					}
-					else if(nroNadadoresPorSerie == 5)
-					{
-						for (int i = 1; i<=restoNroNadadores; i ++)
-						{
-								CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), 6, nroCarrera, nroPrograma, nroTorneo);
-							cont += 1;
-						}
-					}
-				
+				}
 			}
 			//tiempo
 
@@ -416,6 +345,7 @@ public class ControladorNatacion
 				
 				int numeroNadador = CatalogoPreInscripcion.getInstance().contarNadadoresEnCarreraPosta(nroCarrera, nroPrograma, nroTorneo);
 				int nroClub = ControladorNatacion.getInstance().getTorneoActual().getNroClub();
+				int cantidadSeries;
 				if(nroClub == 8)
 				{
 					if (numeroNadador % 5 != 0)
@@ -424,6 +354,7 @@ public class ControladorNatacion
 						{
 							CatalogoSeries.getInstance().insertarSerie(CatalogoSeries.getInstance().maximaSeriePorCarrera(nroCarrera,nroPrograma, nroTorneo) +1, nroCarrera, nroPrograma, nroTorneo);
 						}
+						cantidadSeries = (int)(numeroNadador/5) + 1;
 					}
 					else
 					{
@@ -431,6 +362,7 @@ public class ControladorNatacion
 						{
 							CatalogoSeries.getInstance().insertarSerie(CatalogoSeries.getInstance().maximaSeriePorCarrera(nroCarrera,nroPrograma, nroTorneo) +1, nroCarrera, nroPrograma, nroTorneo);
 						}
+						cantidadSeries = (int)(numeroNadador/5);
 					}
 				}
 				else
@@ -441,6 +373,7 @@ public class ControladorNatacion
 						{
 							CatalogoSeries.getInstance().insertarSerie(CatalogoSeries.getInstance().maximaSeriePorCarrera(nroCarrera,nroPrograma, nroTorneo) +1, nroCarrera, nroPrograma, nroTorneo);
 						}
+						cantidadSeries = (int)(numeroNadador/6) + 1;
 					}
 					else
 					{
@@ -448,31 +381,10 @@ public class ControladorNatacion
 						{
 							CatalogoSeries.getInstance().insertarSerie(CatalogoSeries.getInstance().maximaSeriePorCarrera(nroCarrera,nroPrograma, nroTorneo) +1, nroCarrera, nroPrograma, nroTorneo);
 						}
+						cantidadSeries = (int)(numeroNadador/6);
 					}
 				}
-				int cantidadSeries;
-				if(nroClub == 8)
-				{
-					if (numeroNadador % 5 != 0)
-					{
-						cantidadSeries = (int)(numeroNadador/5) + 1;
-					}
-					else
-					{
-						cantidadSeries = numeroNadador/5;
-					}
-				}
-				else
-				{
-					if (numeroNadador % 6 != 0)
-					{
-						cantidadSeries = (int)(numeroNadador/6) + 1;
-					}
-					else
-					{
-						cantidadSeries = numeroNadador/6;
-					}
-				}
+				
 				int nadadoresPorSerie=(int)numeroNadador/cantidadSeries;
 				int restoNadadores= numeroNadador%cantidadSeries;
 				int cont=0;
