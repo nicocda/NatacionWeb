@@ -29,7 +29,7 @@ public class DataConnection
 			if(conn==null || !conn.isValid(3))
 			{
 				Class.forName("org.sqlite.JDBC").newInstance();
-				conn=DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Leo\\workspace\\NATACIONWEB\\DataBase/natacion.db");
+				conn=DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nicolas\\workspace\\NatacionWeb\\DataBase/natacion.db");
 			}
 			
 		} catch (InstantiationException e) 

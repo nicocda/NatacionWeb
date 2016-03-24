@@ -8,7 +8,7 @@ public class Nadador {
 	
 	@Override
 	public String toString(){
-		return nombre + " " + apellido;
+		return nombre + " " + apellido +" Nac:"+fechaNacimiento;
 	}
 	
 	public String getFechaNacimiento() {

@@ -54,9 +54,12 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		{
 			ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarCarreraProgramaNoCargadas(nroPrograma, nroTorneo);
 			session.setAttribute("carreras", carreras);
-		response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
-		}else if(request.getParameter("posta") != null)
+		response.sendRedirect("PreInscripcionCarreraIndividual2.jsp");
+		}else if(request.getParameter("Posta") != null)
 		{
+			ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarPostasProgramaNoCargadas(nroPrograma, nroTorneo);
+			session.setAttribute("carreras", carreras);
+			response.sendRedirect("PreInscripcionPosta.jsp");
 			
 		}else if(request.getParameter("reporte") != null)
 		{
