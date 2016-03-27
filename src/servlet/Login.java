@@ -55,7 +55,7 @@ public class Login extends HttpServlet {
 			}
 			else
 			{
-				response.sendRedirect("ingresar.html");
+				response.sendRedirect("Ingresar.html");
 			}
 		
 	}
