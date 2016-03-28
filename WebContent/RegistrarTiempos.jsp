@@ -23,22 +23,27 @@ import="entidades.Serie"
 		              </div>
 		              <form action="Tiempos" method="post" name="form">
 		              
-		              <% ArrayList<Carrera> carreras = (ArrayList<Carrera>) session.getAttribute("carrerasTiempos"); %>
+		              <% ArrayList<Carrera> carreras = (ArrayList<Carrera>) session.getAttribute("carrerasTiempos");
+		              if(carreras != null) {%>
 		              <select name="cbCarreras">
 		              <% for(Carrera car: carreras){ %>
 		              <option value="<%= car.getNroCarrera()%>"> <%=car %></option>
 		              
 		              <%} %>
 		              </select>
+		              <%} %>
+		            
 		              <input type="submit" class="botones" value="Elegir Carrea" name="selCarrera">
 		              
-		             <% ArrayList<Serie> series = (ArrayList<Serie>) session.getAttribute("seriesCarrera"); %>
+		             <% ArrayList<Serie> series = (ArrayList<Serie>) session.getAttribute("seriesCarrera");
+		             if(series != null){%>
 		              <select name="cbSeries">
 		              <% for(Serie ser: series){ %>
 		              <option value="<%= ser.getNroSerie()%>"> <%=ser %></option>
 		              
 		              <%} %>
 		              </select>
+		              <%} %>
 		              
 		              
 		              <%for (int i = 0; i<3; i++){%>

@@ -54,10 +54,11 @@ public class Tiempos extends HttpServlet {
 		else if(request.getParameter("selSeries")!=null){}
 		else if(request.getParameter("selRegistrar")!=null){}
 		else if(request.getParameter("menuTiempos")!=null){
-		ArrayList <Carrera>  carreras = ControladorNatacion.getInstance().buscarCarrerasPrograma(ControladorNatacion.getInstance().getTorneoActual().getNroPrograma());
-		session.setAttribute("carrerasTiempos", carreras);		
-		response.sendRedirect("RegistrarTiempos.jsp");
+			
+			ArrayList <Carrera>  carreras = ControladorNatacion.getInstance().buscarCarrerasPrograma(ControladorNatacion.getInstance().getTorneoActual().getNroPrograma());
+			session.setAttribute("carrerasTiempos", carreras);
 		}
+		response.sendRedirect("RegistrarTiempos.jsp");
 	}
 
 }

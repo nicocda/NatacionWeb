@@ -127,8 +127,7 @@
 										<td><%= team.getDniNadador4() %></td>
 									</tr>
 								<%		}	%>
-									<button class="boton-pers" name="quitarEquipo">Quitar Equipo</button>
-									<button class="boton-pers" name="genSerie">Generar Serie</button>
+									
 		 	 <%}else
 		 	 {%>
 		 		<tr>
@@ -136,6 +135,8 @@
 			</tr>
 			
 		 	<% }%>
+		 	<div><button class="boton-pers" name="quitarEquipo">Quitar Equipo</button>
+			<button class="boton-pers" name="genSerie">Generar Serie</button></div>
 		 	</table>
 		 <%}%>
 				</div>

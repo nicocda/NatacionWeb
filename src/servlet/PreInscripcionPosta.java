@@ -93,10 +93,9 @@ public class PreInscripcionPosta extends HttpServlet {
 			response.sendRedirect("PreInscripcionPosta.jsp");
 		}else if(request.getParameter("addEquipo")!=null)
 		{
-			int nroCar = Integer.parseInt(request.getParameter("cbCarrera"));
-			equipo=(Nadador[])session.getAttribute("equipo");
-			ControladorNatacion.getInstance().preInscribirAPosta(nroCar, ControladorNatacion.getInstance().getTorneoActual().getNroPrograma(), ControladorNatacion.getInstance().getTorneoActual().getNroTorneo(), equipo[0].getDni(), equipo[1].getDni(), equipo[2].getDni(), equipo[3].getDni());
 			Carrera car = (Carrera)session.getAttribute("carrera");
+			equipo=(Nadador[])session.getAttribute("equipo");
+			ControladorNatacion.getInstance().preInscribirAPosta(car.getNroCarrera(), ControladorNatacion.getInstance().getTorneoActual().getNroPrograma(), ControladorNatacion.getInstance().getTorneoActual().getNroTorneo(), equipo[0].getDni(), equipo[1].getDni(), equipo[2].getDni(), equipo[3].getDni());
 			ArrayList<NadadorCarreraPosta> nadPreInscr = ControladorNatacion.getInstance().buscarTodosEquipoPosta(car, ControladorNatacion.getInstance().getTorneoActual().getNroTorneo());
 			equipo = new Nadador[4];
 			session.setAttribute("equipo", equipo);
@@ -104,10 +103,10 @@ public class PreInscripcionPosta extends HttpServlet {
 			response.sendRedirect("PreInscripcionPosta.jsp");
 		}else if(request.getParameter("genSerie")!= null)
 		{
-			int nroCar = Integer.parseInt(request.getParameter("cbCarrera"));
+			
 			Carrera car = (Carrera)session.getAttribute("carrera");
 			ArrayList<NadadorCarreraPosta> nadPreInscr = ControladorNatacion.getInstance().buscarTodosEquipoPosta(car, ControladorNatacion.getInstance().getTorneoActual().getNroTorneo());
-			ControladorNatacion.getInstance().generarSeriesPosta(nadPreInscr, nroCar, ControladorNatacion.getInstance().getTorneoActual().getNroPrograma(), ControladorNatacion.getInstance().getTorneoActual().getNroTorneo());
+			ControladorNatacion.getInstance().generarSeriesPosta(nadPreInscr, car.getNroCarrera(), ControladorNatacion.getInstance().getTorneoActual().getNroPrograma(), ControladorNatacion.getInstance().getTorneoActual().getNroTorneo());
 			response.sendRedirect("PreInscripciones.jsp");
 		}
 		

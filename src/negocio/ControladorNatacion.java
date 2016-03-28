@@ -285,9 +285,10 @@ public class ControladorNatacion
 					int restoNroNadadores = numeroNadadores % cantidadSeries;
 					int cont = 0;
 					int andarivel=3; //ingreso de adentro para afuera (3,4,2,5,1,6)
+				//TODO ingresa menos, no se porque
 					for(int j=1;j<=6;j++)
 					{
-						if(nroNadadoresPorSerie>=j+1)
+						if(j<nroNadadoresPorSerie)
 						{
 							for (int i = 1; i <= cantidadSeries; i++)
 							{
@@ -299,17 +300,17 @@ public class ControladorNatacion
 						{
 							for (int i = 1; i<=restoNroNadadores; i ++)
 							{
-									CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), andarivel, nroCarrera, nroPrograma, nroTorneo);
+								CatalogoInscripciones.getInstance().cargarInscripciones(nadadoresEnCarreraOrdenadosPorTiempo.get(cont).getDni(), seriesEnCarrera.get(i-1).getNroSerie(), andarivel, nroCarrera, nroPrograma, nroTorneo);
 								cont += 1;
 							}
 						}
 						if(j%2 != 0)
 						{
-							andarivel =+j;
+							andarivel =andarivel +j;
 						}
 						else
 						{
-							andarivel =-j;
+							andarivel =andarivel -j;
 						}
 				}
 			}
