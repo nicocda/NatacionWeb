@@ -1,9 +1,8 @@
 $(document).ready(function () 
-	{
-        
+{
         tablas();
-        
-        $('#cbCarrera').change(function(){
+        $('#cbCarrera').change(function()
+        {
         	recargarTablas();
         }); 
     });
@@ -19,14 +18,14 @@ function sleep(miliseconds)
 
 function tablas()
 {
-	$('#PersonTableContainer').jtable({
+	$('#NadadoresInscriptos').jtable({
         title: 'Nadadores Inscriptos',
-        paging: true, //Enable paging
-        pageSize: 10, //Set page size (default: 10)
+        paging: true,
+        pageSize: 10,
         selecting: true,
         actions: 
         {
-            listAction: 'PruebaGrilla'
+            listAction: 'CargarGrillaPreInscripcion?action=listPreInscripcion'
         },
         fields: 
         {
@@ -64,13 +63,13 @@ function tablas()
         },
         selectionChanged: function () 
         {
-        	var $selectedRows = $('#PersonTableContainer').jtable('selectedRows');
+        	var $selectedRows = $('#NadadoresInscriptos').jtable('selectedRows');
 
         	if ($selectedRows.length > 0) {
         		$selectedRows.each(function () {
         			var record = $(this).data('record');
                 	var nroCarrera = $("#cbCarrera").val();
-                    $.get("QuitarNadadorIndividual", {dniNadador : record.dni, nroCarrera : nroCarrera})
+                    $.get("CargarGrillaPreInscripcion?action=quitarNadadorIndividual", {dniNadador : record.dni, nroCarrera : nroCarrera})
                     sleep(200);
                     recargarTablas();
                 });
@@ -86,7 +85,7 @@ function tablas()
         selecting: true,
         actions: 
         {
-            listAction: 'CargarGrillaNoInscriptosAIndividual'
+            listAction: 'CargarGrillaPreInscripcion?action=listNoInscriptos'
         },
         fields: 
         {
@@ -130,7 +129,7 @@ function tablas()
         		$selectedRows.each(function () {
                     var record = $(this).data('record');
                 	var nroCarrera = $("#cbCarrera").val();
-                    $.get("PreInscribirNadadorIndividual", {dniNadador : record.dni, nroCarrera : nroCarrera})
+                    $.get("CargarGrillaPreInscripcion?action=preInscribir", {dniNadador : record.dni, nroCarrera : nroCarrera})
                     sleep(200);
                     recargarTablas();
                 });
@@ -145,7 +144,7 @@ function recargarTablas()
 	var nroCarrera = $("#cbCarrera").val();
 	$('#NadadoresNoInscriptos').jtable('load', {push : 1, nroCarrera : nroCarrera});
 	sleep(200);
-	$('#PersonTableContainer').jtable('load', {push : 1, nroCarrera : nroCarrera});
+	$('#NadadoresInscriptos').jtable('load', {push : 1, nroCarrera : nroCarrera});
 }
 
 

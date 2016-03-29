@@ -73,7 +73,7 @@
 						</div>
 						
 						<div class="col-md-6">
-							<div id = "PersonTableContainer" ></div>
+							<div id = "NadadoresInscriptos" ></div>
 						</div>
 						
 						<div class="col-md-12">

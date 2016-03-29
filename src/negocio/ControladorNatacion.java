@@ -149,6 +149,11 @@ public class ControladorNatacion
 				return ct.buscarTorneos();
 			}
 			
+			public ArrayList<Torneo> buscarTorneos(int paginaInicio, int nroPorPagina)
+			{
+				return ct.buscarTorneos(paginaInicio, nroPorPagina);
+			}
+			
 			public void cargarTorneo(String fecha, int nroPrograma, int nroClub)
 			{
 				int nroTorneo = CatalogoTorneos.getInstance().ultimoNroTorneo()+1;
@@ -156,7 +161,7 @@ public class ControladorNatacion
 			}
 			public void eliminarTorneo(int nroTorneo)
 			{
-				 eliminarTorneo(nroTorneo);
+				CatalogoTorneos.getInstance().eliminarTorneo(nroTorneo);
 			}
 			public Torneo buscarTorneo(int nroTorneo)
 			{
@@ -465,6 +470,10 @@ public class ControladorNatacion
 			}
 			public Carrera buscarCarrera(int nroCarrera, int nroPrograma) {
 				return (CatalogoCarreras.getInstance().buscarCarrera(nroCarrera, nroPrograma));
+			}
+			public void modificarTorneo(int nroTorneo, String fecha, int nroPrograma, int nroClub) 
+			{
+				CatalogoTorneos.getInstance().modificarTorneo(nroTorneo, fecha, nroPrograma, nroClub);
 			}
 			
 			
