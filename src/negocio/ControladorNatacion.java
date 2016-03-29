@@ -286,14 +286,14 @@ public class ControladorNatacion
 						cantidadSeries = numeroNadadores/6;
 					}
 				}
-					int nroNadadoresPorSerie = (int) numeroNadadores/cantidadSeries;
+					int nroNadadoresPorSerie = (int) (numeroNadadores/cantidadSeries);
 					int restoNroNadadores = numeroNadadores % cantidadSeries;
 					int cont = 0;
 					int andarivel=3; //ingreso de adentro para afuera (3,4,2,5,1,6)
 				//TODO ingresa menos, no se porque
 					for(int j=1;j<=6;j++)
 					{
-						if(j<nroNadadoresPorSerie)
+						if(j<=nroNadadoresPorSerie)
 						{
 							for (int i = 1; i <= cantidadSeries; i++)
 							{
@@ -301,7 +301,7 @@ public class ControladorNatacion
 								cont += 1;
 							}
 						}
-						else if(nroNadadoresPorSerie == j)
+						else if(nroNadadoresPorSerie == j-1)
 						{
 							for (int i = 1; i<=restoNroNadadores; i ++)
 							{
@@ -309,14 +309,16 @@ public class ControladorNatacion
 								cont += 1;
 							}
 						}
-						if(j%2 != 0)
+						andarivel = (j%2 != 0) ? andarivel +j : andarivel -j;
+						
+						/*if(j%2 != 0)
 						{
 							andarivel =andarivel +j;
 						}
 						else
 						{
 							andarivel =andarivel -j;
-						}
+						}*/
 				}
 			}
 			//tiempo

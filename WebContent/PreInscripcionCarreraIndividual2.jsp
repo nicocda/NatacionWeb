@@ -53,7 +53,7 @@
 						<%
 						Torneo torActual =  (Torneo) session.getAttribute("torneo");
 						//Torneo torActual = new Torneo(); torActual.setNroTorneo(1); torActual.setNroPrograma(2);
-						ArrayList<Carrera> carreras = (ArrayList<Carrera>) session.getAttribute("carreras");
+						ArrayList<Carrera> carreras = (ArrayList<Carrera>) session.getAttribute("carrerasIndividualNoCargadas");
 						%>
 							<label>Carrera:</label>
 							<select id = "cbCarrera" class = "comboBox" <%if(session.getAttribute("carSel") != null) {%> value="<%=session.getAttribute("carSel")%>"<% } %>>
@@ -78,7 +78,7 @@
 						
 						<div class="col-md-12">
 							<br>
-							<button class = "botones">Generar Series</button>
+							<input id = "btnGenerarSeries" class = "botones" type = "button" value = "Generar Series"/>
 						</div>
 				</div>
 			</div>

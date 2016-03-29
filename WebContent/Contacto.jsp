@@ -26,7 +26,6 @@
 		              </div>
 		       
 		        <form action="EnviarEmail" id="contact-form" method="post" name="formEmail">
-		          <div>
                     <label class="name">
                         <span>Su nombre:</span>
                         <input type="text" name="txtNombreEnvia">
@@ -39,10 +38,9 @@
                       <span>Mensaje:</span>	
                       <textarea name="txtMensaje"></textarea>
                     </label>
-                  </div>
                   <div style="padding-top: 40px;">
                         <button class="botones" name="borrarTexto">Borrar</button>
-                        <button type="sumbit" class="botones" name="enviarMail">Enviar</button> 
+                        <button class="botones" name="enviarMail">Enviar</button> 
                   </div>
                 </form>
                 

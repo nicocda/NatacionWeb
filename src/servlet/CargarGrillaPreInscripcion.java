@@ -125,6 +125,15 @@ public class CargarGrillaPreInscripcion extends HttpServlet
 			int nroCarrera = Integer.parseInt(request.getParameter("nroCarrera"));
 			ControladorNatacion.getInstance().eliminarDePreInscripcionIndividual(dniNadador, nroCarrera, ControladorNatacion.getInstance().getTorneoActual().getNroPrograma(), ControladorNatacion.getInstance().getTorneoActual().getNroTorneo());
 		}
+		else if(action.equals("generar"))
+		{
+			int nroCarrera = Integer.parseInt(request.getParameter("nroCarrera"));
+			int nroPrograma = ControladorNatacion.getInstance().getTorneoActual().getNroPrograma();
+			Carrera carSel = ControladorNatacion.getInstance().buscarCarrera(nroCarrera, nroPrograma);
+			Torneo torActual =  ControladorNatacion.getInstance().getTorneoActual();
+			ControladorNatacion.getInstance().generarSeriesPorCarrera(carSel.getNroCarrera(), nroPrograma, torActual.getNroTorneo());
+			response.sendRedirect("PreInscripciones.jsp");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 

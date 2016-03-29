@@ -1,11 +1,18 @@
 $(document).ready(function () 
 {
-        tablas();
-        $('#cbCarrera').change(function()
+    tablas();
+    
+    $('#cbCarrera').change(function()
         {
         	recargarTablas();
         }); 
-    });
+
+    $('#btnGenerarSeries').click(function()
+		{
+			var nroCarrera = $("#cbCarrera").val();
+			$.get("CargarGrillaPreInscripcion", {nroCarrera : nroCarrera, action : "generar"});
+		});
+});
 
 
 function sleep(miliseconds) 

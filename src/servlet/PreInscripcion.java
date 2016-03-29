@@ -20,15 +20,14 @@ import entidades.Nadador;
 import entidades.Torneo;
 import negocio.ControladorNatacion;
 
-/**
- * Servlet implementation class cargarTablasPreInd
- */
+
 @WebServlet("/PreInscripcion")
 public class PreInscripcion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	
-    public PreInscripcion() {
+    public PreInscripcion() 
+    {
         super();
     }
 
@@ -38,11 +37,8 @@ public class PreInscripcion extends HttpServlet {
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+{
 		HttpSession session = request.getSession(false);
 		//Torneo torActual =  (Torneo) session.getAttribute("torneo");
 		Torneo torActual = ControladorNatacion.getInstance().getTorneoActual();
@@ -53,18 +49,21 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		if (request.getParameter("individual") != null) 
 		{
 			ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarCarreraProgramaNoCargadas(nroPrograma, nroTorneo);
-			session.setAttribute("carreras", carreras);
+			session.setAttribute("carrerasIndividualNoCargadas", carreras);
 		response.sendRedirect("PreInscripcionCarreraIndividual2.jsp");
-		}else if(request.getParameter("Posta") != null)
+		}
+		else if(request.getParameter("Posta") != null)
 		{
 			ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarPostasProgramaNoCargadas(nroPrograma, nroTorneo);
 			session.setAttribute("carreras", carreras);
 			response.sendRedirect("PreInscripcionPosta.jsp");
 			
-		}else if(request.getParameter("reporte") != null)
+		}
+		else if(request.getParameter("reporte") != null)
 		{
 			
-		}else if(request.getParameter("selCarrera") != null)
+		}
+		else if(request.getParameter("selCarrera") != null)
 		{
 			
 			int nroCarrera =Integer.parseInt(request.getParameter("cbCarrera"));
@@ -75,7 +74,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			session.setAttribute("nadNoInsc", nadadoresNoInsc);
 			session.setAttribute("nadInsc", nadadoresInsc);
 			response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
-		}else if(request.getParameter("agregar") != null)
+		}
+		else if(request.getParameter("agregar") != null)
 		{
 			Carrera carSel = (Carrera)session.getAttribute("carSel");
 			int dniNadadorSeleccionado = Integer.parseInt(request.getParameter("nadNoInsc"));
@@ -87,7 +87,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			session.setAttribute("nadNoInsc", nadadoresNoInsc);
 			session.setAttribute("nadInsc", nadadoresInsc);
 			response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
-		}else if(request.getParameter("quitar") != null)
+		}
+		else if(request.getParameter("quitar") != null)
 		{
 			Carrera carSel = (Carrera)session.getAttribute("carSel");
 			int dniNadadorSeleccionado = Integer.parseInt(request.getParameter("nadInsc"));
@@ -99,7 +100,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			session.setAttribute("nadNoInsc", nadadoresNoInsc);
 			session.setAttribute("nadInsc", nadadoresInsc);
 			response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
-		}else if(request.getParameter("generar") != null)
+		}
+		else if(request.getParameter("generar") != null)
 		{
 			Carrera carSel = (Carrera)session.getAttribute("carSel");
 			ControladorNatacion.getInstance().generarSeriesPorCarrera(carSel.getNroCarrera(), nroPrograma, nroTorneo);
