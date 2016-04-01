@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Reporte Nadador por Carrera</title>
+<title>Reporte Premiacion por Carrera</title>
 
 <!-- Bootstrap Core CSS -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -25,7 +25,7 @@
 		              <!-- Abajo de este tag Título -->
 		              <div class="page-header">
 		             
-		                <h3>Seleccione Carrera</h3>
+		                <h3>Reporte Premiacion por Carrera</h3>
 		              </div>
 	              	 <form name="form" action="reports" method="post">
 	              	  <!-- Abajo de este tag va el contenido -->
@@ -42,7 +42,7 @@
               		 	<%} %>
 	              	  </select>
 	              	  <%} %>
-	              	  <input type="submit" class="botones" name="reportePreInscripcion"/>
+	              	  <input type="submit" class="botones" name="reportePremiacion" value="Seleccionar Carrera y Generar Reporte"/>
 	              	  </form>
               	 </div>
    	</div>

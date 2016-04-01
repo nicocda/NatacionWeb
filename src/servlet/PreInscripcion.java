@@ -61,7 +61,9 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 		}
 		else if(request.getParameter("reporte") != null)
 		{
-			
+			ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarCarrerasPrograma(nroPrograma);
+			session.setAttribute("carreras", carreras);
+			response.sendRedirect("ReportePreInscripcion.jsp");
 		}
 		else if(request.getParameter("selCarrera") != null)
 		{
