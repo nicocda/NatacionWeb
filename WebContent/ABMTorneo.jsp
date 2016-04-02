@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	import = "entidades.Usuario"
+	import= "util.TipoUsuarios"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -36,10 +38,19 @@
 		              <div class="page-header">
 		                <h3>Si se les ocurre algún título...:</h3>
 		              </div>
-	              	  
+		              <%Usuario usuarioActual = (Usuario)session.getAttribute("usuarioActual"); %>
+	              	  <%if (usuarioActual.getTipoUsuario() == TipoUsuarios.ADMIN.ordinal()+1) 
+	              	  { %>
 	              	  <!-- Abajo de este tag va el contenido -->
 	             	  <div id = "tablaTorneos"></div>
-	             
+	             	  <%}
+					  else
+	             	  {
+	             	  	%>
+	             	  	<a>Puto</a>
+	             	  <% 
+	             	  }
+	             	  %>
 	             </div>
 	 </div>
 </div>

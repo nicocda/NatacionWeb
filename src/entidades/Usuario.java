@@ -1,30 +1,37 @@
 package entidades;
 
-import java.io.Serializable;
-
-public class Usuario implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8085452900538815609L;
+public class Usuario 
+{
 	private String usuario, contraseña;
+	private int tipoUsuario;
 
-	public String getUsuario() {
+	public int getTipoUsuario() 
+	{
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(int tipoUsuario) 
+	{
+		this.tipoUsuario = tipoUsuario;
+	}
+
+	public String getUsuario() 
+	{
 		return usuario;
 	}
 
-	public void setUsuario(String usuario) {
+	public void setUsuario(String usuario)
+	{
 		this.usuario = usuario;
 	}
 
-	public String getContraseña() {
+	public String getContraseña() 
+	{
 		return contraseña;
 	}
 
-	public void setContraseña(String contraseña) {
+	public void setContraseña(String contraseña) 
+	{
 		this.contraseña = contraseña;
 	}
-	
-	
 }

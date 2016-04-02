@@ -14,6 +14,7 @@ import entidades.NadadorCarreraPosta;
 import entidades.Programa;
 import entidades.Serie;
 import entidades.Torneo;
+import entidades.Usuario;
 import datos.*;
 
 public class ControladorNatacion 
@@ -466,7 +467,7 @@ public class ControladorNatacion
 			public int nroTorneo(){
 				return (CatalogoTorneos.getInstance().ultimoNroTorneo()+1);
 			}
-			public boolean buscarUsuario(String usuario, String password) 
+			public Usuario buscarUsuario(String usuario, String password) 
 			{
 				return CatalogoUsuario.getInstance().buscarUsuario(usuario, password);
 			}
