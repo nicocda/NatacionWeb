@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	import="negocio.ControladorNatacion"
+	import="entidades.Usuario"
+	import="util.TipoUsuarios"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -17,21 +20,36 @@
   <div id="sidebar-wrapper" class="col-md-1" style="background: #252932">
             <div id="sidebar" >
                 <ul class="nav list-group">
+                    <%Usuario usuarioActual = (Usuario)session.getAttribute("usuarioActual");%>            
+                	<li>
+                		<label style="color: #808080;">Torneo Seleccionado:</label>
+                		<%if (ControladorNatacion.getInstance().getTorneoActual() != null)
+                		{%>
+                		<a id="fondo" href=MenuDefinirTorneo><%= ControladorNatacion.getInstance().getTorneoActual().toString() %></a>
+                		<%}
+                		else
+                		{%>
+                		<a id="fondo" href=MenuDefinirTorneo>Seleccionar un Torneo</a>
+                		<%}%>
+                	</li>
+	              	<%if (usuarioActual.getTipoUsuario() == TipoUsuarios.ADMIN.ordinal()+1 || usuarioActual.getTipoUsuario() == TipoUsuarios.MANAGER.ordinal()+1) 
+	              	{ %>
+	                    <li>
+	                        <a id="fondo" href="PreInscripciones.jsp">Pre-inscripciones</a>
+	                    </li>
+	                    <li>
+	                        <a name="menuTiempos" id="fondo" href="Tiempos">Tiempos</a>
+	                    </li>
+	                <%}%>
+	                <%if (usuarioActual.getTipoUsuario() == TipoUsuarios.ADMIN.ordinal()+1) 
+	              	{ %>
                     <li>
-                        <a id="fondo" href="MenuDefinirTorneo">Gestión Torneo</a>
+                        <a id="fondo" href="ABMNadador.jsp"></i>Nadadores</a>
                     </li>
                     <li>
-                        <a id="fondo" href="PreInscripciones.jsp">Pre-inscripciones</a>
+                        <a id="fondo" href="ABMTorneo.jsp">Torneos</a>
                     </li>
-                    <li>
-                        <a name="menuTiempos" id="fondo" href="Tiempos">Tiempos</a>
-                    </li>
-                    <li>
-                        <a id="fondo" href="ABMNadador.jsp"></i>Editar</a>
-                    </li>
-                    <li>
-                        <a id="fondo" href="#">Cronómetro</a>
-                    </li>
+                    <%}%>
                 </ul>
             </div>
         </div>

@@ -38,7 +38,6 @@
 		              <div class="page-header">
 		                <h3>Si se les ocurre algún título...:</h3>
 		              </div>
-		              <%Usuario usuarioActual = (Usuario)session.getAttribute("usuarioActual"); %>
 	              	  <%if (usuarioActual.getTipoUsuario() == TipoUsuarios.ADMIN.ordinal()+1) 
 	              	  { %>
 	              	  <!-- Abajo de este tag va el contenido -->
@@ -47,7 +46,7 @@
 					  else
 	             	  {
 	             	  	%>
-	             	  	<a>Puto</a>
+	             	  	<p>El usuario no dispone de suficientes permisos para ingresar en esta página</p>
 	             	  <% 
 	             	  }
 	             	  %>

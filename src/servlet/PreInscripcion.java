@@ -40,77 +40,83 @@ public class PreInscripcion extends HttpServlet {
 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 {
 		HttpSession session = request.getSession(false);
-		//Torneo torActual =  (Torneo) session.getAttribute("torneo");
-		Torneo torActual = ControladorNatacion.getInstance().getTorneoActual();
-		
-		int nroPrograma = torActual.getNroPrograma();
-		int nroTorneo = torActual.getNroTorneo();
-		
-		if (request.getParameter("individual") != null) 
+
+		if(ControladorNatacion.getInstance().getTorneoActual() != null)
 		{
-			ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarCarreraProgramaNoCargadas(nroPrograma, nroTorneo);
-			session.setAttribute("carrerasIndividualNoCargadas", carreras);
-		response.sendRedirect("PreInscripcionCarreraIndividual2.jsp");
-		}
-		else if(request.getParameter("Posta") != null)
-		{
-			ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarPostasProgramaNoCargadas(nroPrograma, nroTorneo);
-			session.setAttribute("carreras", carreras);
-			response.sendRedirect("PreInscripcionPosta.jsp");
+			Torneo torActual = ControladorNatacion.getInstance().getTorneoActual();
+			int nroPrograma = torActual.getNroPrograma();
+			int nroTorneo = torActual.getNroTorneo();
 			
+			if (request.getParameter("individual") != null) 
+			{
+				ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarCarreraProgramaNoCargadas(nroPrograma, nroTorneo);
+				session.setAttribute("carrerasIndividualNoCargadas", carreras);
+				response.sendRedirect("PreInscripcionCarreraIndividual2.jsp");
+			}
+			else if(request.getParameter("Posta") != null)
+			{
+				ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarPostasProgramaNoCargadas(nroPrograma, nroTorneo);
+				session.setAttribute("carreras", carreras);
+				response.sendRedirect("PreInscripcionPosta.jsp");
+				
+			}
+			else if(request.getParameter("reporte") != null)
+			{
+				ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarCarrerasPrograma(nroPrograma);
+				session.setAttribute("carreras", carreras);
+				response.sendRedirect("ReportePreInscripcion.jsp");
+			}
+			else if(request.getParameter("selCarrera") != null)
+			{
+				
+				int nroCarrera =Integer.parseInt(request.getParameter("cbCarrera"));
+				Carrera carSel = ControladorNatacion.getInstance().buscarCarrera(nroCarrera, nroPrograma);
+				session.setAttribute("carSel", carSel);
+				ArrayList<Nadador> nadadoresNoInsc = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carSel, nroTorneo);
+				ArrayList<Nadador> nadadoresInsc = ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carSel, nroTorneo);
+				session.setAttribute("nadNoInsc", nadadoresNoInsc);
+				session.setAttribute("nadInsc", nadadoresInsc);
+				response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
+			}
+			else if(request.getParameter("agregar") != null)
+			{
+				Carrera carSel = (Carrera)session.getAttribute("carSel");
+				int dniNadadorSeleccionado = Integer.parseInt(request.getParameter("nadNoInsc"));
+				ControladorNatacion.getInstance().preInscribirACarreraIndividual(dniNadadorSeleccionado, carSel.getNroCarrera(), nroPrograma, nroTorneo);
+				ArrayList<Nadador> nadadoresNoInsc = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carSel, nroTorneo);
+				ArrayList<Nadador> nadadoresInsc = ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carSel, nroTorneo);
+				session.removeAttribute("nadNoInsc");
+				session.removeAttribute("nadInsc");
+				session.setAttribute("nadNoInsc", nadadoresNoInsc);
+				session.setAttribute("nadInsc", nadadoresInsc);
+				response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
+			}
+			else if(request.getParameter("quitar") != null)
+			{
+				Carrera carSel = (Carrera)session.getAttribute("carSel");
+				int dniNadadorSeleccionado = Integer.parseInt(request.getParameter("nadInsc"));
+				ControladorNatacion.getInstance().eliminarDePreInscripcionIndividual(dniNadadorSeleccionado, carSel.getNroCarrera(), nroPrograma, nroTorneo);
+				ArrayList<Nadador> nadadoresNoInsc = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carSel, nroTorneo);
+				ArrayList<Nadador> nadadoresInsc = ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carSel, nroTorneo);
+				session.removeAttribute("nadNoInsc");
+				session.removeAttribute("nadInsc");
+				session.setAttribute("nadNoInsc", nadadoresNoInsc);
+				session.setAttribute("nadInsc", nadadoresInsc);
+				response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
+			}
+			else if(request.getParameter("generar") != null)
+			{
+				Carrera carSel = (Carrera)session.getAttribute("carSel");
+				ControladorNatacion.getInstance().generarSeriesPorCarrera(carSel.getNroCarrera(), nroPrograma, nroTorneo);
+				response.sendRedirect("PreInscripciones.jsp");
+			}
 		}
-		else if(request.getParameter("reporte") != null)
+		else
 		{
-			ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarCarrerasPrograma(nroPrograma);
-			session.setAttribute("carreras", carreras);
-			response.sendRedirect("ReportePreInscripcion.jsp");
+			request.setAttribute("mensajeError", "Primero debe definir un torneo!");
+			request.getRequestDispatcher("Error.jsp").forward(request, response);
 		}
-		else if(request.getParameter("selCarrera") != null)
-		{
 			
-			int nroCarrera =Integer.parseInt(request.getParameter("cbCarrera"));
-			Carrera carSel = ControladorNatacion.getInstance().buscarCarrera(nroCarrera, nroPrograma);
-			session.setAttribute("carSel", carSel);
-			ArrayList<Nadador> nadadoresNoInsc = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carSel, nroTorneo);
-			ArrayList<Nadador> nadadoresInsc = ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carSel, nroTorneo);
-			session.setAttribute("nadNoInsc", nadadoresNoInsc);
-			session.setAttribute("nadInsc", nadadoresInsc);
-			response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
-		}
-		else if(request.getParameter("agregar") != null)
-		{
-			Carrera carSel = (Carrera)session.getAttribute("carSel");
-			int dniNadadorSeleccionado = Integer.parseInt(request.getParameter("nadNoInsc"));
-			ControladorNatacion.getInstance().preInscribirACarreraIndividual(dniNadadorSeleccionado, carSel.getNroCarrera(), nroPrograma, nroTorneo);
-			ArrayList<Nadador> nadadoresNoInsc = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carSel, nroTorneo);
-			ArrayList<Nadador> nadadoresInsc = ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carSel, nroTorneo);
-			session.removeAttribute("nadNoInsc");
-			session.removeAttribute("nadInsc");
-			session.setAttribute("nadNoInsc", nadadoresNoInsc);
-			session.setAttribute("nadInsc", nadadoresInsc);
-			response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
-		}
-		else if(request.getParameter("quitar") != null)
-		{
-			Carrera carSel = (Carrera)session.getAttribute("carSel");
-			int dniNadadorSeleccionado = Integer.parseInt(request.getParameter("nadInsc"));
-			ControladorNatacion.getInstance().eliminarDePreInscripcionIndividual(dniNadadorSeleccionado, carSel.getNroCarrera(), nroPrograma, nroTorneo);
-			ArrayList<Nadador> nadadoresNoInsc = ControladorNatacion.getInstance().buscarNadadoresNoInscriptosACarreraIndividual(carSel, nroTorneo);
-			ArrayList<Nadador> nadadoresInsc = ControladorNatacion.getInstance().buscarNadadoresInscriptosACarreraIndividual(carSel, nroTorneo);
-			session.removeAttribute("nadNoInsc");
-			session.removeAttribute("nadInsc");
-			session.setAttribute("nadNoInsc", nadadoresNoInsc);
-			session.setAttribute("nadInsc", nadadoresInsc);
-			response.sendRedirect("PreInscripcionCarreraIndividual.jsp");
-		}
-		else if(request.getParameter("generar") != null)
-		{
-			Carrera carSel = (Carrera)session.getAttribute("carSel");
-			ControladorNatacion.getInstance().generarSeriesPorCarrera(carSel.getNroCarrera(), nroPrograma, nroTorneo);
-			response.sendRedirect("PreInscripciones.jsp");
-		}
-		
-		//request.getRequestDispatcher("PreInscripcionCarreraIndividual.jsp").forward(request, response);	
 	}
 
 }

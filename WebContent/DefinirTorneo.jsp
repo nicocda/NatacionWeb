@@ -34,10 +34,7 @@
 <div id = "wrapper">
 
 	<%@ include file = "SideBarMenu.jsp"%>
-	
 
-	
-	<%@ include file = "SideBarMenu.jsp"%>
 	<div id="main-wrapper" class="col-md-11 pull-right">
 	            <div id="main">
 	             <div class="page-header">

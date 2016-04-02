@@ -3,6 +3,8 @@
     import="java.util.ArrayList"
     import="entidades.Carrera"
     import="entidades.Nadador"
+    import="entidades.Usuario"
+    import="util.TipoUsuarios"
     import="entidades.NadadorCarreraPosta"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -17,132 +19,137 @@
 	<%@ include file = "SideBarMenu.jsp"%>
 <div id="main-wrapper" class="col-md-11 pull-right">
 		<div id="main">
-			<div class = "row">
-			
-			<!-- /#sidebar-wrapper -->
-
-			<!-- Page Content -->
-
-
-			<form name="form" action="PreInscripcionPosta" method="post">
-				<div class='col-lg-12'>
-					
-					<br> <label>Carrera: &nbsp;&nbsp;</label>
-					<select name = "cbCarrera" class = "comboBox" <%if(session.getAttribute("carrera") != null) {%> value="<%=session.getAttribute("carrera")%>"<% } %>>
-					<option selected disabled><<--Seleccione una carrera de la lista -->></option>
-					<% ArrayList<Carrera> carreras = (ArrayList<Carrera>) session.getAttribute("carreras");
-					for(Carrera car : carreras)
-					{ %>
-						<option value="<%=car.getNroCarrera()%>"><%=car %></option>
-					<%}
-					%>
-					</select>
-					<button class="boton-pers" type="submit" name="selCarrera">Seleccionar Carrera</button>
-				</div>
-			
-				<div class='col-md-6'>
-						<h3>Nadadores no Inscriptos</h3>
-							<select multiple name="nadadores" size="8">
-									<%
-									Nadador equipo[];
-									equipo = (Nadador[])session.getAttribute("equipo");
-									ArrayList<Nadador> nadadores = (ArrayList<Nadador>) session.getAttribute("nadadores");
-									if(session.getAttribute("nadadores")!=null)
-									{
-										for(Nadador n : nadadores)
-										{ 
-											if(equipo!=null)
-											{	
-												boolean bandera=false;
-												for(int i=0;i<4;i++)
+	   	  	<%if (usuarioActual.getTipoUsuario() == TipoUsuarios.ADMIN.ordinal()+1 || usuarioActual.getTipoUsuario() == TipoUsuarios.MANAGER.ordinal()+1) 
+	   	  	{ %>
+				<div class = "row">
+	
+				<form name="form" action="PreInscripcionPosta" method="post">
+					<div class='col-lg-12'>
+						
+						<br> <label>Carrera: &nbsp;&nbsp;</label>
+						<select name = "cbCarrera" class = "comboBox" <%if(session.getAttribute("carrera") != null) {%> value="<%=session.getAttribute("carrera")%>"<% } %>>
+						<option selected disabled><<--Seleccione una carrera de la lista -->></option>
+						<% ArrayList<Carrera> carreras = (ArrayList<Carrera>) session.getAttribute("carreras");
+						for(Carrera car : carreras)
+						{ %>
+							<option value="<%=car.getNroCarrera()%>"><%=car %></option>
+						<%}
+						%>
+						</select>
+						<button class="boton-pers" type="submit" name="selCarrera">Seleccionar Carrera</button>
+					</div>
+				
+					<div class='col-md-6'>
+							<h3>Nadadores no Inscriptos</h3>
+								<select multiple name="nadadores" size="8">
+										<%
+										Nadador equipo[];
+										equipo = (Nadador[])session.getAttribute("equipo");
+										ArrayList<Nadador> nadadores = (ArrayList<Nadador>) session.getAttribute("nadadores");
+										if(session.getAttribute("nadadores")!=null)
+										{
+											for(Nadador n : nadadores)
+											{ 
+												if(equipo!=null)
 												{	
-													if(equipo[i] != null)
-													{
-														if(equipo[i].getDni()==n.getDni())
+													boolean bandera=false;
+													for(int i=0;i<4;i++)
+													{	
+														if(equipo[i] != null)
 														{
-															 bandera= true;
+															if(equipo[i].getDni()==n.getDni())
+															{
+																 bandera= true;
+															}
 														}
 													}
+													if(bandera==false)
+													{
+														 %><option value="<%=n.getDni() %>"><%=n %></option> <%
+													}
+												}else {
+													 %><option value="<%=n.getDni() %>"><%=n %></option><%
 												}
-												if(bandera==false)
-												{
-													 %><option value="<%=n.getDni() %>"><%=n %></option> <%
-												}
-											}else {
-												 %><option value="<%=n.getDni() %>"><%=n %></option><%
 											}
-										}
-									} %>
-							</select>
-							<button class="boton-pers" type="submit" name="selNadador">Seleccionar Nadador</button>
-				</div>
-				<div class='col-md-6'>
-				<h3>Equipo</h3>
-					<%	if(session.getAttribute("equipo")!= null)
-							{
-								for(int i=0;i<equipo.length;i++)
+										} %>
+								</select>
+								<button class="boton-pers" type="submit" name="selNadador">Seleccionar Nadador</button>
+					</div>
+					<div class='col-md-6'>
+					<h3>Equipo</h3>
+						<%	if(session.getAttribute("equipo")!= null)
 								{
-									%>
-									<label>Nadador <%=i+1 %>: </label>
-								<% if(equipo[i]==null) {%>
-								<label>Seleccione un Nadador</label>
-								<%} else { %>
-								<label><%=equipo[i] %></label><% 
-										 }
-										 if(equipo[i]!= null)
-										 {%>
-								<button class="boton-pers" type="submit" name="<%=i%>">Quitar</button>
-								
-							<% 			 }%>
-							<br>
-							<%}
-									if(equipo[0]!=null && equipo[1]!=null && equipo[2]!=null && equipo[3]!=null)
-									{%>
-										<button class="boton-pers" type="submit" name="addEquipo">AgregarEquipo</button>
-							<%	}
-							}%>
-				</div>
-		
-			<div class='col-lg-12'>
-			<%ArrayList<NadadorCarreraPosta> equipoInsc = (ArrayList<NadadorCarreraPosta>)session.getAttribute("InscEquipo");
-		if(equipoInsc != null) 
-		{
-			if(!equipoInsc.isEmpty())
-			{%>
-						<h3>Equipos Inscriptos</h3>
-						<table border="1">
-							<tr>
-								<th>Nadador 1</th>
-								<th>Nadador 2</th>
-								<th>Nadador 3</th>
-								<th>Nadador 4</th>
-							</tr>
-									<%
-										for(NadadorCarreraPosta team : equipoInsc)
-										{%>
-									<tr>
-										<td><%= team.getDniNadador1() %></td>
-										<td><%= team.getDniNadador2() %></td>
-										<td><%= team.getDniNadador3() %></td>
-										<td><%= team.getDniNadador4() %></td>
-									</tr>
-								<%		}	%>
+									for(int i=0;i<equipo.length;i++)
+									{
+										%>
+										<label>Nadador <%=i+1 %>: </label>
+									<% if(equipo[i]==null) {%>
+									<label>Seleccione un Nadador</label>
+									<%} else { %>
+									<label><%=equipo[i] %></label><% 
+											 }
+											 if(equipo[i]!= null)
+											 {%>
+									<button class="boton-pers" type="submit" name="<%=i%>">Quitar</button>
 									
-		 	 <%}else
-		 	 {%>
-		 		<tr>
-				<td>&nbsp</td><td>&nbsp</td><td>&nbsp</td><td>&nbsp</td>
-			</tr>
+								<% 			 }%>
+								<br>
+								<%}
+										if(equipo[0]!=null && equipo[1]!=null && equipo[2]!=null && equipo[3]!=null)
+										{%>
+											<button class="boton-pers" type="submit" name="addEquipo">AgregarEquipo</button>
+								<%	}
+								}%>
+					</div>
 			
-		 	<% }%>
-		 	<div><button class="boton-pers" name="quitarEquipo">Quitar Equipo</button>
-			<button class="boton-pers" name="genSerie">Generar Serie</button></div>
-		 	</table>
-		 <%}%>
-				</div>
-			</form>
-</div></div></div>
+				<div class='col-lg-12'>
+				<%ArrayList<NadadorCarreraPosta> equipoInsc = (ArrayList<NadadorCarreraPosta>)session.getAttribute("InscEquipo");
+			if(equipoInsc != null) 
+			{
+				if(!equipoInsc.isEmpty())
+				{%>
+							<h3>Equipos Inscriptos</h3>
+							<table border="1">
+								<tr>
+									<th>Nadador 1</th>
+									<th>Nadador 2</th>
+									<th>Nadador 3</th>
+									<th>Nadador 4</th>
+								</tr>
+										<%
+											for(NadadorCarreraPosta team : equipoInsc)
+											{%>
+										<tr>
+											<td><%= team.getDniNadador1() %></td>
+											<td><%= team.getDniNadador2() %></td>
+											<td><%= team.getDniNadador3() %></td>
+											<td><%= team.getDniNadador4() %></td>
+										</tr>
+									<%		}	%>
+										
+			 	 <%}else
+			 	 {%>
+			 		<tr>
+					<td>&nbsp</td><td>&nbsp</td><td>&nbsp</td><td>&nbsp</td>
+				</tr>
+				
+			 	<% }%>
+			 	<div><button class="boton-pers" name="quitarEquipo">Quitar Equipo</button>
+				<button class="boton-pers" name="genSerie">Generar Serie</button></div>
+			 	</table>
+			 <%}%>
+					</div>
+				</form>
+</div>
 
+	<%} 
+	else
+	{%>
+		<p>El usuario no dispone de suficientes permisos para ingresar en esta página</p>
+	<%}%>
+
+</div>
+</div>
 </div>
 			<!-- /#page-content-wrapper -->
 

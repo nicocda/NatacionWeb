@@ -1,9 +1,12 @@
+<%@page import="util.TipoUsuarios"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	import="java.util.ArrayList"
 	import="entidades.Torneo"
 	import="entidades.Programa"	
 	import="entidades.Carrera"
 	import="entidades.Nadador"
+	import="entidades.Usuario"
+	import="util.TipoUsuarios"
 	import="negocio.ControladorNatacion"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -47,39 +50,50 @@
 	<%@ include file = "SideBarMenu.jsp"%>
 	<div id="main-wrapper" class="col-md-11 pull-right">
 		<div id="main">
+		<!-- Abajo de este tag Título -->
+        <div class="page-header">
+          <h3>Pre Inscripción Individual</h3>
+        </div>
 			<div class = "row">
 				<div class = "col-lg-12">	
 						<div class='col-lg-12'>
-						<%
-						Torneo torActual =  (Torneo) session.getAttribute("torneo");
-						//Torneo torActual = new Torneo(); torActual.setNroTorneo(1); torActual.setNroPrograma(2);
-						ArrayList<Carrera> carreras = (ArrayList<Carrera>) session.getAttribute("carrerasIndividualNoCargadas");
-						%>
-							<label>Carrera:</label>
-							<select id = "cbCarrera" class = "comboBox" <%if(session.getAttribute("carSel") != null) {%> value="<%=session.getAttribute("carSel")%>"<% } %>>
-								<option selected disabled><<--Seleccione una carrera de la lista -->></option>
-								<% 
-				            	for(Carrera c : carreras)
-				            	{           	
-				            	%>
-				            		<option value="<%= c.getNroCarrera()%>"><%= c%> </option>           		
-				            	<%
-				            	}
-				            	%>		
-				            </select>				
-						</div>
-						<div class="col-md-6">
-							<div id = "NadadoresNoInscriptos" ></div>
-						</div>
-						
-						<div class="col-md-6">
-							<div id = "NadadoresInscriptos" ></div>
-						</div>
-						
-						<div class="col-md-12">
-							<br>
-							<input id = "btnGenerarSeries" class = "botones" type = "button" value = "Generar Series"/>
-						</div>
+	              	  	<%if (usuarioActual.getTipoUsuario() == TipoUsuarios.ADMIN.ordinal()+1 || usuarioActual.getTipoUsuario() == TipoUsuarios.MANAGER.ordinal()+1) 
+	              	  	{ %>
+							<%
+							Torneo torActual =  (Torneo) session.getAttribute("torneo");
+							//Torneo torActual = new Torneo(); torActual.setNroTorneo(1); torActual.setNroPrograma(2);
+							ArrayList<Carrera> carreras = (ArrayList<Carrera>) session.getAttribute("carrerasIndividualNoCargadas");
+							%>
+								<label>Carrera:</label>
+								<select id = "cbCarrera" class = "comboBox" <%if(session.getAttribute("carSel") != null) {%> value="<%=session.getAttribute("carSel")%>"<% } %>>
+									<option selected disabled><<--Seleccione una carrera de la lista -->></option>
+									<% 
+					            	for(Carrera c : carreras)
+					            	{           	
+					            	%>
+					            		<option value="<%= c.getNroCarrera()%>"><%= c%> </option>           		
+					            	<%
+					            	}
+					            	%>		
+					            </select>				
+							</div>
+							<div class="col-md-6">
+								<div id = "NadadoresNoInscriptos" ></div>
+							</div>
+							
+							<div class="col-md-6">
+								<div id = "NadadoresInscriptos" ></div>
+							</div>
+							
+							<div class="col-md-12">
+								<br>
+								<input id = "btnGenerarSeries" class = "botones" type = "button" value = "Generar Series"/>
+							</div>
+						<%} 
+						else
+						{%>
+							<p>El usuario no dispone de suficientes permisos para ingresar en esta página</p>
+						<%}%>
 				</div>
 			</div>
 		</div>

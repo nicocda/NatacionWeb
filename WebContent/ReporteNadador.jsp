@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"
     import="java.util.ArrayList"
-    import="entidades.Carrera"%>
+    import="entidades.Carrera"
+    import="entidades.Usuario"
+    import="util.TipoUsuarios"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,9 +30,16 @@
 		              </div>
 	              	  
 	              	  <!-- Abajo de este tag va el contenido -->
-	              	<form action="reports" method="post">
-	              	  <input type="submit" class="botones" name="reporteNadadores" value="Generar Reporte de Nadadores"/>
-	              	  </form>
+	              	  <%if (usuarioActual.getTipoUsuario() == TipoUsuarios.ADMIN.ordinal()+1 || usuarioActual.getTipoUsuario() == TipoUsuarios.MANAGER.ordinal()+1) 
+	              	  { %>
+	              		  <form action="reports" method="post">
+		              	  <input type="submit" class="botones" name="reporteNadadores" value="Generar Reporte de Nadadores"/>
+		              	  </form>
+	              	  <%} 
+					  else
+					  {%>
+					    	<p>El usuario no dispone de suficientes permisos para ingresar en esta página</p>
+					  <%}%>
               	 </div>
    	</div>
 </div>
