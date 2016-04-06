@@ -65,7 +65,7 @@
 							ArrayList<Carrera> carreras = (ArrayList<Carrera>) session.getAttribute("carrerasIndividualNoCargadas");
 							%>
 								<label>Carrera:</label>
-								<select id = "cbCarrera" class = "comboBox" <%if(session.getAttribute("carSel") != null) {%> value="<%=session.getAttribute("carSel")%>"<% } %>>
+								<select id = "cbCarreras" class = "comboBox" <%if(session.getAttribute("carSel") != null) {%> value="<%=session.getAttribute("carSel")%>"<% } %>>
 									<option selected disabled><<--Seleccione una carrera de la lista -->></option>
 									<% 
 					            	for(Carrera c : carreras)

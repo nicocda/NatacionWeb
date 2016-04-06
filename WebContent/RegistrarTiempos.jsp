@@ -2,12 +2,14 @@
 import="java.util.ArrayList"
 import="entidades.Carrera"
 import="entidades.Serie"
+import="entidades.Inscripcion"
+import="entidades.Nadador"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Cargar Tiempos Post Carrera</title>
 </head>
 <body>
 
@@ -19,43 +21,72 @@ import="entidades.Serie"
 	            <div id="main">
 		              <!-- Abajo de este tag Título -->
 		              <div class="page-header">
-		                <h3>¿Qué desea hacer?</h3>
+		                <h3>Menu Carga de Tiempo</h3>
 		              </div>
 		              <form action="Tiempos" method="post" name="form">
 		              
 		              <% ArrayList<Carrera> carreras = (ArrayList<Carrera>) session.getAttribute("carrerasTiempos");
 		              if(carreras != null) {%>
-		              <select name="cbCarreras">
-		              <% for(Carrera car: carreras){ %>
-		              <option value="<%= car.getNroCarrera()%>"> <%=car %></option>
-		              
-		              <%} %>
+		             <select name = "cbCarrera" class = "comboBox" <%if(session.getAttribute("nroCarSel") != null) {%> value= "<%=session.getAttribute("nroCarSel") %>"<% } %>>
+						
+					 <% 
+					 for(Carrera car: carreras)
+					 	{ 
+					 	%>
+		            	  <option value="<%= car.getNroCarrera()%>"> <%=car %></option>        
+		              	<%
+		              	} 
+		              	%>
 		              </select>
+		               <input type="submit" class="botones" value="Elegir Carrea" name="selCarrera">
 		              <%} %>
-		            
-		              <input type="submit" class="botones" value="Elegir Carrea" name="selCarrera">
-		              
+
 		             <% ArrayList<Serie> series = (ArrayList<Serie>) session.getAttribute("seriesCarrera");
-		             if(series != null){%>
-		              <select name="cbSeries">
-		              <% for(Serie ser: series){ %>
-		              <option value="<%= ser.getNroSerie()%>"> <%=ser %></option>
-		              
-		              <%} %>
+		             Carrera carSeleccionada = (Carrera) session.getAttribute("carreraSeleccionadaTiempo");
+		             if(carSeleccionada != null)
+		             {
+		             	if(!series.isEmpty())
+		             		{%>
+			               <select name = "cbSeries" class = "comboBox" >
+						<option selected disabled><<--Seleccione una serie de la lista -->></option>
+					 <% for(Serie ser: series)
+			              { %>
+			              	<option value="<%= ser.getNroSerie()%>"> <%=ser %></option>
+			            <%} %>
+			            <input type="submit" class="botones" value="Elegir Serie" name="selSerie">
+			            <%
+			         		 }
+			         		 else
+			         		 {%>
+			         		 <h4>No hay Series cargadas para esta Carrera</h4>
+			         	<%	 } %>
 		              </select>
+		              
 		              <%} %>
 		              
 		              
-		              <%for (int i = 0; i<3; i++){%>
-		             
-		              <div class="row" style="padding:10px;">
-		              <label class="col-md-2">Andarivel 1:</label>
-		              <label class="col-md-4"><--Nadador--></label>
-		              <input class="col-md-5" name="txtTiempo1"></input>
+		              <%
+		              ArrayList<Inscripcion> insc = (ArrayList<Inscripcion>)session.getAttribute("nadadoresPorSerie");
+		              ArrayList<Nadador> nadinsc = (ArrayList<Nadador>)session.getAttribute("nadadoresPorSerieNad");
+		            
+		              if(insc != null)  
+		              { int j=0;
+		              String time;
+		            	  for(Inscripcion i : insc)
+		            	  {
+		            	   time ="txtTiempo"+j;
+		            	  %>
+		            		  <div class="row" style="padding:10px;">
+		              <label class="col-md-2">Andarivel <%= i.getNroAndarivel() %>:</label>
+		              <label class="col-md-4"><%=nadinsc.get(j).getNombre()+" "+nadinsc.get(j).getApellido() %></label>
+		              <input class="col-md-5" name="<%=time %>" placeholder="  :  :  "></input>
 		              </div>
-						<%} %>
-		              
-		              
+		            	  <%
+		            	  j++;
+		            	  } 
+		            	  %>
+		            	<input type="submit" class="botones" value="Registrar Tiempos" name="regTiempos">
+		              <%} %>
 		              
 		              </form>
 		        </div>

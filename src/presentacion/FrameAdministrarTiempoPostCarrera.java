@@ -1,6 +1,5 @@
 package presentacion;
 
-import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
 import java.awt.CardLayout;
@@ -14,9 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
-import javax.swing.text.MaskFormatter;
 
-import datos.CatalogoInscripciones;
+
+
 import datos.CatalogoNadadores;
 import negocio.ControladorNatacion;
 import entidades.Carrera;
@@ -27,21 +26,14 @@ import entidades.Torneo;
 import util.UtilidadesEscritorio;
 
 import java.awt.Font;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 
 public class FrameAdministrarTiempoPostCarrera extends JInternalFrame implements InternalFrameListener {
 	private JTextField txtTiempo2;

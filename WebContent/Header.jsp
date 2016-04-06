@@ -23,7 +23,7 @@
     <nav class="collapse navbar-collapse" style="padding-left:110px;">
         <ul class="nav navbar-nav">
             <li>
-                <a href="PaginapPpal.jsp" id="fondo">Página Principal</a>
+                <a href="PaginaPpal.jsp" id="fondo">Página Principal</a>
             </li>
             <li class="dropdown">
               <a href="#" id="fondo" class="dropdown-toggle" data-toggle="dropdown">Hola<b class="caret"></b></a>

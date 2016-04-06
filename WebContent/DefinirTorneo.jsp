@@ -43,7 +43,7 @@
 
 			<form action="btnDefinirTorneo" method="POST" name="formTorneo">
 				<% ArrayList<Torneo> listaTorneos =(ArrayList<Torneo>) session.getAttribute("listaTorneos"); %>
- 				<select id="torneo" name="torneo">
+ 				<select class="comboBox" id="torneo" name="torneo">
 					<% for(int i=0; i < listaTorneos.size(); i++)
                     	{
                     	%>
@@ -54,8 +54,8 @@
 				</select> <label>El torneo que elija sera utilizado por defecto en el
 					programa para el resto de los modulos, puede optar por no elegir un
 					torneo, y se deshabilitaran algunos de los modulos</label> <br>
-				<button class="boton-pers">No elegir Torneo</button>
-				<input class="boton-pers" type="submit" value="Elegir Torneo">
+				
+				<input class="botones" type="submit" value="Elegir Torneo">
 
 
 			</form>
