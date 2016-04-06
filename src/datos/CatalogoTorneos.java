@@ -100,7 +100,7 @@ public class CatalogoTorneos {
 	public ArrayList<Torneo> buscarTorneos()
 	{
 		ArrayList<Torneo> lt = new ArrayList<Torneo>();
-		String sql="Select * from torneo";
+		String sql="Select * from torneo t inner join club c on c.nroClub=t.nroClub";
 		Statement sentencia = null;
 		ResultSet rs = null;
 		Connection con = DataConnection.getInstancia().getConn();
@@ -116,6 +116,7 @@ public class CatalogoTorneos {
 				t.setNroClub(rs.getInt("nroClub"));
 				t.setNroPrograma(rs.getInt("nroPrograma"));
 				t.setFecha(stringCorto);
+				t.setNombreClub(rs.getString("nombre"));
 				lt.add(t);
 			}
 		}
@@ -144,7 +145,7 @@ public class CatalogoTorneos {
 	public ArrayList<Torneo> buscarTorneos(int paginaInicio, int nroPorPagina)
 	{
 		ArrayList<Torneo> lt = new ArrayList<Torneo>();
-		String sql="Select * from Torneo limit ? , ? ";
+		String sql="Select * from Torneo t inner join club c on c.nroClub=t.nroClub limit ? , ? ";
 		PreparedStatement sentencia=null;
 		ResultSet rs = null;
 		Connection con = DataConnection.getInstancia().getConn();
@@ -163,6 +164,7 @@ public class CatalogoTorneos {
 				t.setNroClub(rs.getInt("nroClub"));
 				t.setNroPrograma(rs.getInt("nroPrograma"));
 				t.setFecha(stringCorto);
+				t.setNombreClub(rs.getString("nroClub"));
 				lt.add(t);
 			}
 		}
@@ -210,7 +212,7 @@ public class CatalogoTorneos {
 		return max;
 	}
 	public Torneo buscarTorneo(int nroTorneo) {
-		String sql="select * from torneo where nroTorneo=?";
+		String sql="select * from torneo t inner join club c on c.nroClub=t.nroClub where nroTorneo=? ";
 		PreparedStatement sentencia= null;
 		Connection con= DataConnection.getInstancia().getConn();
 		ResultSet rs = null;
@@ -227,6 +229,7 @@ public class CatalogoTorneos {
 				t.setNroTorneo(rs.getInt("nroTorneo"));
 				t.setNroClub(rs.getInt("nroClub"));
 				t.setNroPrograma(rs.getInt("nroPrograma"));
+				t.setNombreClub(rs.getString("nombre"));
 				t.setFecha(stringCorto);
 			}
 		}

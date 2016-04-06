@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	import="entidades.Usuario"
+	import="negocio.ControladorNatacion"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -31,6 +32,12 @@
             <li>
                 <a href="Contacto.jsp" id="fondo">Contacto</a>
             </li>
+        </ul>	
+        <ul class="nav navbar-nav" style="padding-top: 12px; padding-left: 40px;">
+       			<%if (ControladorNatacion.getInstance().getTorneoActual() != null)
+            	{%>
+            		<a id="fondo" href=MenuDefinirTorneo>Torneo:<%= ControladorNatacion.getInstance().getTorneoActual().toString() %></a>
+            	<%}%>
         </ul>
         <ul class="nav navbar-nav pull-right">
 			<li class="dropdown">

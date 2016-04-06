@@ -22,15 +22,11 @@
                 <ul class="nav list-group">
                     <%Usuario usuarioActual = (Usuario)session.getAttribute("usuarioActual");%>            
                 	<li>
-                		<label style="color: #808080;">Torneo Seleccionado:</label>
-                		<%if (ControladorNatacion.getInstance().getTorneoActual() != null)
-                		{%>
-                		<a id="fondo" href=MenuDefinirTorneo><%= ControladorNatacion.getInstance().getTorneoActual().toString() %></a>
-                		<%}
-                		else
-                		{%>
+                		
+                		
+                	
                 		<a id="fondo" href=MenuDefinirTorneo>Seleccionar un Torneo</a>
-                		<%}%>
+                		
                 	</li>
 	              	<%if (usuarioActual.getTipoUsuario() == TipoUsuarios.ADMIN.ordinal()+1 || usuarioActual.getTipoUsuario() == TipoUsuarios.MANAGER.ordinal()+1) 
 	              	{ %>
