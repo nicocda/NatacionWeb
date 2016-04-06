@@ -62,9 +62,11 @@ public class BtnDefinirTorneo extends HttpServlet {
 		ControladorNatacion.getInstance().setTorneoActual(t);
 		response.sendRedirect("PaginaPpal.jsp");
 		*/
+		HttpSession session = request.getSession(false);
 		int nroTorneo = Integer.parseInt(request.getParameter("torneo"));
 		Torneo torneoActual = ControladorNatacion.getInstance().buscarTorneo(nroTorneo);
 		ControladorNatacion.getInstance().setTorneoActual(torneoActual);
+		session.removeAttribute("listaTorneos");
 		response.sendRedirect("PaginaPpal.jsp");
 	}
 
