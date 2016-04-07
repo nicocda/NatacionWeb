@@ -61,28 +61,22 @@ import="entidades.Nadador"
 			         		 <h4>No hay Series cargadas para esta Carrera</h4>
 			         	<%	 } %>
 		              </select>
-		              
 		              <%} %>
-		              
-		              
 		              <%
 		              ArrayList<Inscripcion> insc = (ArrayList<Inscripcion>)session.getAttribute("nadadoresPorSerie");
-		              ArrayList<Nadador> nadinsc = (ArrayList<Nadador>)session.getAttribute("nadadoresPorSerieNad");
-		            
 		              if(insc != null)  
-		              { int j=0;
+		              { 
 		              String time;
 		            	  for(Inscripcion i : insc)
 		            	  {
-		            	   time ="txtTiempo"+j;
+		            	   time ="txtTiempo"+i.getNroAndarivel();
 		            	  %>
 		            		  <div class="row" style="padding:10px;">
 		              <label class="col-md-2">Andarivel <%= i.getNroAndarivel() %>:</label>
-		              <label class="col-md-4"><%=nadinsc.get(j).getNombre()+" "+nadinsc.get(j).getApellido() %></label>
+		              <label class="col-md-4"><%=i.getNombreApellidoNadador() %></label>
 		              <input class="col-md-5" name="<%=time %>" placeholder="  :  :  "></input>
 		              </div>
 		            	  <%
-		            	  j++;
 		            	  } 
 		            	  %>
 		            	<input type="submit" class="botones" value="Registrar Tiempos" name="regTiempos">

@@ -479,7 +479,7 @@ public class FrameAdministrarTiempoPostCarrera extends JInternalFrame implements
 	{
 		limpiar();
 		Serie serie = cbSeries.getItemAt(cbSeries.getSelectedIndex());
-		ArrayList<Inscripcion> inscrip = ControladorNatacion.getInstance().buscarInscripcion(serie.getNroSerie(), serie.getNroCarrera(), ControladorNatacion.getInstance().getTorneoActual().getNroTorneo(),
+		ArrayList<Inscripcion> inscrip = ControladorNatacion.getInstance().buscarInscripcionSerie(serie.getNroSerie(), serie.getNroCarrera(), ControladorNatacion.getInstance().getTorneoActual().getNroTorneo(),
 				ControladorNatacion.getInstance().getTorneoActual().getNroPrograma());
 		
 		ArrayList<Nadador> nadadoresPorSerie = new ArrayList<Nadador>();
@@ -586,7 +586,7 @@ public class FrameAdministrarTiempoPostCarrera extends JInternalFrame implements
 		Serie serie = (Serie)cbSeries.getSelectedItem();
 		Carrera carrera = (Carrera)cbCarreras.getSelectedItem();
 		//Traigo la inscripcion
-		ArrayList<Inscripcion> inscrip = ControladorNatacion.getInstance().buscarInscripcion(serie.getNroSerie(), carrera.getNroCarrera(), ControladorNatacion.getInstance().getTorneoActual().getNroTorneo(),
+		ArrayList<Inscripcion> inscrip = ControladorNatacion.getInstance().buscarInscripcionSerie(serie.getNroSerie(), carrera.getNroCarrera(), ControladorNatacion.getInstance().getTorneoActual().getNroTorneo(),
 				ControladorNatacion.getInstance().getTorneoActual().getNroPrograma());
 		String[] tiempo = new  String[6];
 		 if(!chckbxDescalificado1.isSelected()) tiempo[0] = txtTiempo1.getText(); else tiempo[0] = "59:59:99";

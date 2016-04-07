@@ -40,7 +40,7 @@ public class Login extends HttpServlet {
 				//inicializo la sesion
 				HttpSession session = request.getSession(true);
 				session.setAttribute("usuarioActual", usuarioActual);
-				request.getRequestDispatcher("MenuDefinirTorneo").forward(request, response);
+				request.getRequestDispatcher("PaginaPpal.jsp").forward(request, response);
 			}
 			else
 			{

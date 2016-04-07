@@ -30,8 +30,8 @@ public class DataConnection
 			{
 				Class.forName("org.sqlite.JDBC").newInstance();
 				//conn=DriverManager.getConnection("jdbc:sqlite:C:\\Users\\JuanCruz\\workspace\\NatacionWeb\\DataBase/natacion.db");
-				//conn=DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nicolas\\workspace\\NatacionWeb\\DataBase/natacion.db");
-				conn=DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Leo\\workspace\\NATACIONWEB\\DataBase/natacion.db");
+				conn=DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nicolas\\workspace\\NatacionWeb\\DataBase/natacion.db");
+				//conn=DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Leo\\workspace\\NATACIONWEB\\DataBase/natacion.db");
 
 			}
 			

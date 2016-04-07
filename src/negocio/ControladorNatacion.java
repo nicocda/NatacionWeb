@@ -335,9 +335,13 @@ public class ControladorNatacion
 
 			}
 			
-			public ArrayList<Inscripcion> buscarInscripcion(int nroSerie, int nroCarrera, int nroTorneo, int nroPrograma)
+			public ArrayList<Inscripcion> buscarInscripcionCarrera(int nroCarrera, int nroTorneo, int nroPrograma)
 			{
-				return CatalogoInscripciones.getInstance().buscarInscripcion(nroSerie, nroCarrera, nroTorneo, nroPrograma);
+				return CatalogoInscripciones.getInstance().buscarInscripcionCarrera(nroCarrera, nroTorneo, nroPrograma);
+			}
+			public ArrayList<Inscripcion> buscarInscripcionSerie(int nroSerie,int nroCarrera, int nroTorneo, int nroPrograma)
+			{
+				return CatalogoInscripciones.getInstance().buscarInscripcionSerie(nroSerie,nroCarrera, nroTorneo, nroPrograma);
 			}
 			public boolean existeInscripcion(int nroCarrera, int nroTorneo, int nroPrograma) {
 				
@@ -477,6 +481,10 @@ public class ControladorNatacion
 			public void modificarTorneo(int nroTorneo, String fecha, int nroPrograma, int nroClub) 
 			{
 				CatalogoTorneos.getInstance().modificarTorneo(nroTorneo, fecha, nroPrograma, nroClub);
+			}
+			public Serie buscarsSerieCarrera(Carrera car, int nroSerie) {
+				// TODO Auto-generated method stub
+				return CatalogoSeries.getInstance().buscarSerieCarrera(car,nroSerie);
 			}
 			
 			

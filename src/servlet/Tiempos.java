@@ -54,17 +54,9 @@ public class Tiempos extends HttpServlet
 			{
 				int nroSerie =Integer.parseInt(request.getParameter("cbSeries"));
 				Carrera car = (Carrera)session.getAttribute("carreraSeleccionadaTiempo");
-				ArrayList<Inscripcion> insc = ControladorNatacion.getInstance().buscarInscripcion(nroSerie, car.getNroCarrera(), nroTorneo, nroPrograma);
-				//ESTO NO SE DEBERIA HACER JAJAJA
-				ArrayList<Nadador> nadInsc = new ArrayList<Nadador>();
-				for(Inscripcion i : insc)
-				{
-					Nadador nad = ControladorNatacion.getInstance().buscarNadadorPorDni(i.getNroNadador());
-					nadInsc.add(nad);
-					}
+				ArrayList<Inscripcion> insc = ControladorNatacion.getInstance().buscarInscripcionSerie(nroSerie, car.getNroCarrera(), nroTorneo, nroPrograma);	
 				session.setAttribute("nroSerieSel", nroSerie);
 				session.setAttribute("nadadoresPorSerie", insc);
-				session.setAttribute("nadadoresPorSerieNad", nadInsc);
 			}
 			else if(request.getParameter("regTiempos")!=null)
 			{

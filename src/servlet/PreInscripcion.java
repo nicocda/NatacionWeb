@@ -16,7 +16,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 
 import entidades.Carrera;
+import entidades.Inscripcion;
 import entidades.Nadador;
+import entidades.Serie;
 import entidades.Torneo;
 import negocio.ControladorNatacion;
 
@@ -40,7 +42,7 @@ public class PreInscripcion extends HttpServlet {
 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 {
 		HttpSession session = request.getSession(false);
-
+		
 		if(ControladorNatacion.getInstance().getTorneoActual() != null)
 		{
 			Torneo torActual = ControladorNatacion.getInstance().getTorneoActual();
@@ -63,12 +65,31 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			else if(request.getParameter("reporte") != null)
 			{
 				ArrayList <Carrera>  carreras= ControladorNatacion.getInstance().buscarCarrerasPrograma(nroPrograma);
-				session.setAttribute("carreras", carreras);
-				response.sendRedirect("ReportePreInscripcion.jsp");
+				request.setAttribute("carreras", carreras);
+				request.getRequestDispatcher("ReportePreInscripcion.jsp").forward(request, response);
+			}
+			else if(request.getParameter("reporteSelCarrera") !=null)
+			{
+				int nroCarrera = Integer.parseInt(request.getParameter("cbCarrera"));
+				Carrera car = ControladorNatacion.getInstance().buscarCarrera(nroCarrera, nroPrograma);
+				request.setAttribute("carrera", car);
+				ArrayList<Serie> series = ControladorNatacion.getInstance().buscarSeriesPorCarrera(nroCarrera, nroPrograma, nroTorneo);
+				request.setAttribute("series", series);
+				ArrayList<Inscripcion> inscriptos= ControladorNatacion.getInstance().buscarInscripcionCarrera(car.getNroCarrera(), nroTorneo, nroPrograma);
+				request.setAttribute("inscriptos", inscriptos);
+				if(!inscriptos.isEmpty())
+				{
+					request.getRequestDispatcher("ReporteCarreraIndividual.jsp").forward(request, response);
+				}
+				else
+				{
+					request.setAttribute("error", "No hay series generadas para esa carrera");
+					request.getRequestDispatcher("ReportePreInscripcion.jsp").forward(request, response);
+
+				}
 			}
 			else if(request.getParameter("selCarrera") != null)
 			{
-				
 				int nroCarrera =Integer.parseInt(request.getParameter("cbCarrera"));
 				Carrera carSel = ControladorNatacion.getInstance().buscarCarrera(nroCarrera, nroPrograma);
 				session.setAttribute("carSel", carSel);

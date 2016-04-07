@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import negocio.ControladorNatacion;
+
 /**
  * Servlet implementation class Logout
  */
@@ -41,6 +43,7 @@ public class Logout extends HttpServlet {
 		if(session.getAttribute("usuarioActual")!=null)
 		{
 		session.removeAttribute("usuarioActual");
+		ControladorNatacion.getInstance().setTorneoActual(null);
 		response.sendRedirect("Ingresar.html");
 		}
 		

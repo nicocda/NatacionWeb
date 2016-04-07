@@ -2,6 +2,39 @@ package entidades;
 
 public class NadadorCarreraPosta {
 	private int nroCarrera, dniNadador1, dniNadador2, dniNadador3, dniNadador4, nroPrograma, nroTorneo;
+	private String nombre1,nombre2,nombre3,nombre4;
+
+	public String getNombre1() {
+		return nombre1;
+	}
+
+	public void setNombre1(String nombre1) {
+		this.nombre1 = nombre1;
+	}
+
+	public String getNombre2() {
+		return nombre2;
+	}
+
+	public void setNombre2(String nombre2) {
+		this.nombre2 = nombre2;
+	}
+
+	public String getNombre3() {
+		return nombre3;
+	}
+
+	public void setNombre3(String nombre3) {
+		this.nombre3 = nombre3;
+	}
+
+	public String getNombre4() {
+		return nombre4;
+	}
+
+	public void setNombre4(String nombre4) {
+		this.nombre4 = nombre4;
+	}
 
 	public int getNroCarrera() {
 		return nroCarrera;
