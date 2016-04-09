@@ -10,37 +10,36 @@
 
 <!-- Custom CSS -->
 <link rel="stylesheet" href="css/miestilo.css">
+
 <title>Gestion de Torneos</title>
 </head>
 <body>
 
-<!-- Menú Herencia Visual -->
+<%@ include file = "Header.jsp"%>
+<div id = "wrapper">
 
-	<%@ include file = "PaginaPpal.jsp" %>
+	<%@ include file = "SideBarMenu.jsp"%>
+	<div id="main-wrapper" class="col-md-11 pull-right">
+	            <div id="main">
+		              <!-- Abajo de este tag Título -->
+		              <div class="page-header">
+		                <h3>¿Qué desea hacer?</h3>
+		              </div>
+	              	  
+	              	  <!-- Abajo de este tag va el contenido -->
+	              	  
+	              	  	<form id= "form" action ="ABMNadador" method ="post">
+							<input class = "botones" type = "submit" name = "nuevo" value="Nuevo Nadador"> 
+							<input class = "botones" type = "submit" name = "editar" value="Editar Nadador"> 
+							<input class = "botones" type = "submit" name = "eliminar" value="Eliminar Nadador"> 
+						</form>
+	           	</div>
+	           
+	        
+	          
+	        </div>
 
-<!-- Esto es para que no colapsen el menú y el contenido!!!!!! -->
-	
-<div id="wrapper">	
-	<%String mensaje = (String)session.getAttribute("mensaje"); %>
-	
-	<div id="page-content-wrapper">
-		<div class="container-fluid">
-			<div class = "row">
-				<div class = "col-lg-12">
-					<center>
-						<h2>¿Qué desea hacer?</h2>
-						<h5 style="color:#FF0000"><%=mensaje %></h5>
-					</center>
-					<form id= "form" action ="ABMNadador" method ="post">
-						<input class = "botones" type = "submit" name = "nuevo" value="Nuevo Nadador"> 
-						<input class = "botones" type = "submit" name = "editar" value="Editar Nadador"> 
-						<input class = "botones" type = "submit" name = "eliminar" value="Eliminar Nadador"> 
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	
 </div>
+
 </body>
 </html>

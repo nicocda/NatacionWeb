@@ -1645,8 +1645,8 @@ a.bg-danger:focus, a.bg-danger:hover {
 }
 
 .page-header {
-	padding-bottom: 9px;
-	margin: 40px 0 20px;
+	padding-bottom: 2px;
+	margin: 20px 0 20px;
 	border-bottom: 1px solid #eee
 }
 
@@ -4646,6 +4646,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
 }
 
 .navbar-brand {
+	color:#FFFFFF;
 	float: left;
 	height: 50px;
 	padding: 15px 15px;
@@ -7142,6 +7143,7 @@ button.close {
 }
 
 .pull-right {
+	padding-right:60px;
 	float: right !important
 }
 

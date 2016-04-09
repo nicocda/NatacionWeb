@@ -8,7 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import conexion.DataConnection;
+import entidades.Carrera;
 import entidades.Serie;
+import negocio.ControladorNatacion;
 
 public class CatalogoSeries {
 
@@ -146,5 +148,52 @@ public class CatalogoSeries {
 					}
 				}		
 			return maxNroSerie;
+		}
+		public Serie buscarSerieCarrera(Carrera car, int nroSerie) {
+			String sql = "SELECT * FROM serie where nroCarrera = ? and nroPrograma=? and nroTorneo=? and nroSerie=?";
+			PreparedStatement sentencia=null;
+			ResultSet rs=null;
+			Connection con = DataConnection.getInstancia().getConn();
+			Serie s = null;
+			try
+			{
+				sentencia=con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				sentencia.setInt(1, car.getNroCarrera());
+				sentencia.setInt(2, car.getNroPrograma());
+				sentencia.setInt(3, ControladorNatacion.getInstance().getTorneoActual().getNroTorneo());
+				sentencia.setInt(4, nroSerie);
+				rs = sentencia.executeQuery();
+				
+					while(rs.next())
+					{
+						s = new Serie();
+						s.setNroSerie(rs.getInt("nroSerie"));
+						s.setNroCarrera(rs.getInt("nroCarrera"));
+						s.setNroPrograma(rs.getInt("nroPrograma"));
+						s.setNroTorneo(rs.getInt("nroTorneo"));
+						
+					}
+			}
+			catch(SQLException e)
+				{
+				e.printStackTrace();
+				}
+			finally
+			{
+				try
+				{
+					if(sentencia!=null && !sentencia.isClosed())
+					{
+						sentencia.close();
+					}
+					DataConnection.getInstancia().CloseConn();
+				}
+				catch (SQLException sqle)
+				{
+					sqle.printStackTrace();
+				}
+			}	
+			
+			return s;
 		}
 }

@@ -5,9 +5,6 @@ public class NadadorCarreraIndividual
 	private int nroCarrera, dniNadador, nroPrograma, nroTorneo;
 	private String tiempoPreCompeticion;
 
-	public String toString(){
-		return Integer.toString(dniNadador) ;
-	}
 	public String getTiempoPreCompeticion() {
 		return tiempoPreCompeticion;
 	}

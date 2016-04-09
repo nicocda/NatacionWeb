@@ -33,52 +33,9 @@ public class CatalogoPreInscripcion {
 	}
 	public ArrayList<Nadador> buscarNadadoresInscriptosACarreraIndividual(Carrera car, int nroTorneo, String fechaTorneo) 	
 	{	
-		//CON ESTE CRITERIO:
-		//TipoCarrera 6 -> Edad == 6
-		//TipoCarrera 7 -> Edad == 7
-		//...
-		//...
-		//TipoCarrera 14 -> Edad == 14
-		//TipoCarrera 15 -> Edad >= 15
-		
+
 		ArrayList<Nadador> listaNadadores = new ArrayList<Nadador>();
-		String sql;
-		if(car.getTipoCarrera() == 6)
-		{
-			sql = "SELECT * FROM nadador inner join preinscripcionindividual on dni = nroNadador "
-					+ "where (cast (strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int)) <= 6 and nroCarrera = ? and nroTorneo = ? and dni in "
-					+ "(SELECT n.dni FROM preinscripcionindividual nc "
-					+ "inner join nadador n on n.dni = nc.nroNadador "
-					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
-					+ "order by nroClub, apellido";
-		}
-		else if (car.getTipoCarrera() < 13 && car.getTipoCarrera() >= 7)
-		{
-			sql = "SELECT * FROM nadador inner join preinscripcionindividual on dni = nroNadador "
-					+ "where (cast (strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int)) = ? and nroCarrera = ? and nroTorneo = ? and dni in "
-					+ "(SELECT n.dni FROM preinscripcionindividual nc "
-					+ "inner join nadador n on n.dni = nc.nroNadador "
-					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
-					+ "order by nroClub, apellido";
-		}
-		else if(car.getTipoCarrera() == 13 || car.getTipoCarrera() == 14)
-		{
-			sql = "SELECT * FROM nadador inner join preinscripcionindividual on dni = nroNadador "
-					+ "where ((cast(strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int)) ==13 or (cast(strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int)) ==14) and nroCarrera = ? and nroTorneo = ? and dni in "
-					+ "(SELECT n.dni FROM preinscripcionindividual nc "
-					+ "inner join nadador n on n.dni = nc.nroNadador "
-					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
-					+ "order by nroClub, apellido";
-		}
-		else
-		{
-			sql = "SELECT * FROM nadador inner join preinscripcionindividual on dni = nroNadador "
-					+ "where ((cast(strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int)) >= 15) and nroCarrera = ? and nroTorneo = ? and dni in "
-					+ "(SELECT n.dni FROM preinscripcionindividual nc "
-					+ "inner join nadador n on n.dni = nc.nroNadador "
-					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
-					+ "order by nroClub, apellido";
-		}
+		String sql = "select * from preInscripcionIndividual pii inner join nadador n on pii.nroNadador=n.dni where pii.nroCarrera=? and pii.nroTorneo=?";
 		
 		PreparedStatement sentencia=null;
 		ResultSet rs=null;
@@ -86,57 +43,221 @@ public class CatalogoPreInscripcion {
 		
 		try{
 			sentencia=con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			sentencia.setInt(1, car.getNroCarrera());
+			sentencia.setInt(2, nroTorneo);
+			
+			rs = sentencia.executeQuery();
+			
+				while(rs.next())
+				{					
+					Nadador nadador = new Nadador();
+					String fechaCorta=null;
+					
+					try {
+						Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("fechaNacimiento"));
+						 fechaCorta = new SimpleDateFormat("dd/MM/yyyy").format(date);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					
+					nadador.setDni(rs.getInt("dni"));
+					nadador.setNombre(rs.getString("nombre"));
+					nadador.setApellido(rs.getString("apellido"));
+					nadador.setFechaNacimiento(fechaCorta);
+					nadador.setNroClub(rs.getInt("nroClub"));
+					nadador.setSexo(rs.getString("sexo").charAt(0));
+					listaNadadores.add(nadador);
+				}
+				
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		} 
+		finally
+		{
+			try
+			{
+				if(sentencia!=null && !sentencia.isClosed())
+				{
+					sentencia.close();
+				}
+				DataConnection.getInstancia().CloseConn();
+			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}	
+		
+		return listaNadadores;
+	}
+
+	public ArrayList<Nadador> buscarNadadoresInscriptosACarreraIndividual(Carrera car, int nroTorneo, int index, int nroPag) 	
+	{	
+
+		ArrayList<Nadador> listaNadadores = new ArrayList<Nadador>();
+		String sql = "select * from preInscripcionIndividual pii inner join nadador n on pii.nroNadador=n.dni where pii.nroCarrera=? and pii.nroTorneo=? limit ? , ?";
+		
+		PreparedStatement sentencia=null;
+		ResultSet rs=null;
+		Connection con = DataConnection.getInstancia().getConn();
+		
+		try{
+			sentencia=con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			sentencia.setInt(1, car.getNroCarrera());
+			sentencia.setInt(2, nroTorneo);
+			sentencia.setInt(3, index);
+			sentencia.setInt(4,nroPag);
+			
+			rs = sentencia.executeQuery();
+			
+				while(rs.next())
+				{					
+					Nadador nadador = new Nadador();
+					String fechaCorta=null;
+					
+					try {
+						Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("fechaNacimiento"));
+						 fechaCorta = new SimpleDateFormat("dd/MM/yyyy").format(date);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					
+					nadador.setDni(rs.getInt("dni"));
+					nadador.setNombre(rs.getString("nombre"));
+					nadador.setApellido(rs.getString("apellido"));
+					nadador.setFechaNacimiento(fechaCorta);
+					nadador.setNroClub(rs.getInt("nroClub"));
+					nadador.setSexo(rs.getString("sexo").charAt(0));
+					listaNadadores.add(nadador);
+				}
+				
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		} 
+		finally
+		{
+			try
+			{
+				if(sentencia!=null && !sentencia.isClosed())
+				{
+					sentencia.close();
+				}
+				DataConnection.getInstancia().CloseConn();
+			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}	
+		
+		return listaNadadores;
+	}
+	
+	public ArrayList<Nadador> buscarNadadoresNoInscriptosACarreraIndividual(Carrera car, int nroTorneo, String fechaTorneo, int paginaInicio, int nroPagina) 	
+	{	
+		
+		ArrayList<Nadador> listaNadadores = new ArrayList<Nadador>();
+		String sql;
+		//TODO ACA VA EL IF CON LA CONDICION DE LA CARRERA
+		if(car.getTipoCarrera() == 6)
+		{
+			sql = "SELECT * FROM nadador "
+					+ "where cast (strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) <= 6 and dni not in "
+					+ "(SELECT n.dni FROM preinscripcionindividual nc "
+					+ "inner join nadador n on n.dni = nc.nroNadador "
+					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
+					+ " order by nroClub, apellido limit ? , ?";
+		}
+		else if (car.getTipoCarrera() < 13 && car.getTipoCarrera() >= 7)
+		{
+			sql = "SELECT * FROM nadador where "
+					+ "cast(strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) = ? and dni not in "
+					+ "(SELECT n.dni FROM preinscripcionindividual nc "
+					+ "inner join nadador n on n.dni = nc.nroNadador "
+					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
+					+ " order by nroClub, apellido limit ? , ?";
+		}
+		else if(car.getTipoCarrera() == 13 || car.getTipoCarrera() == 14)
+		{
+			sql = "SELECT * FROM nadador "
+					+ "where (cast(strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) ==13 or cast(strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) ==14) and dni not in "
+					+ "(SELECT n.dni FROM preinscripcionindividual nc "
+					+ "inner join nadador n on n.dni = nc.nroNadador "
+					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
+					+ " order by nroClub, apellido limit ? , ?";
+		}
+		else
+		{
+			sql = "SELECT * FROM nadador "
+					+ "where cast (strftime('%Y.%m%d', ?) - strftime('%Y.%m%d', fechaNacimiento) as int) >= 15 and dni not in "
+					+ "(SELECT n.dni FROM preinscripcionindividual nc "
+					+ "inner join nadador n on n.dni = nc.nroNadador "
+					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
+					+ " order by nroClub, apellido limit ? , ?";
+		}
+		PreparedStatement sentencia=null;
+		ResultSet rs=null;
+		Connection con = DataConnection.getInstancia().getConn();
+		
+		try{
+			sentencia=con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			
 			
 			String fecha=null;
+			
 
 			Date d = new SimpleDateFormat("dd/MM/yyyy").parse(fechaTorneo);
 			fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(d);
 
 			if(car.getTipoCarrera() == 6)
-			{	
+			{
 				sentencia.setString(1, fecha);
 				sentencia.setInt(2, car.getNroCarrera());
-				sentencia.setInt(3, nroTorneo);
-				sentencia.setInt(4, car.getNroCarrera());	
-				sentencia.setInt(5, car.getNroPrograma());
-				sentencia.setInt(6, nroTorneo);
-				sentencia.setInt(7, car.getNroCarrera());
-				sentencia.setInt(8, car.getNroPrograma());
+				sentencia.setInt(3, car.getNroPrograma());
+				sentencia.setInt(4, nroTorneo);
+				sentencia.setInt(5, car.getNroCarrera());
+				sentencia.setInt(6, car.getNroPrograma());
+				sentencia.setInt(7, paginaInicio);
+				sentencia.setInt(8, nroPagina);
 			}
 			else if (car.getTipoCarrera() < 13 && car.getTipoCarrera() > 6)
 			{
 				sentencia.setString(1, fecha);
 				sentencia.setInt(2, car.getTipoCarrera());
 				sentencia.setInt(3, car.getNroCarrera());
-				sentencia.setInt(4, nroTorneo);
-				sentencia.setInt(5, car.getNroCarrera());
-				sentencia.setInt(6, car.getNroPrograma());
-				sentencia.setInt(7, nroTorneo);
-				sentencia.setInt(8, car.getNroCarrera());
-				sentencia.setInt(9, car.getNroPrograma());
+				sentencia.setInt(4, car.getNroPrograma());
+				sentencia.setInt(5, nroTorneo);
+				sentencia.setInt(6, car.getNroCarrera());
+				sentencia.setInt(7, car.getNroPrograma());
+				sentencia.setInt(8, paginaInicio);
+				sentencia.setInt(9, nroPagina);
 			}
 			else if(car.getTipoCarrera() == 13 || car.getTipoCarrera() == 14)
 			{
 				sentencia.setString(1, fecha);
 				sentencia.setString(2, fecha);
 				sentencia.setInt(3, car.getNroCarrera());
-				sentencia.setInt(4, nroTorneo);
-				sentencia.setInt(5, car.getNroCarrera());
-				sentencia.setInt(6, car.getNroPrograma());
-				sentencia.setInt(7, nroTorneo);
-				sentencia.setInt(8, car.getNroCarrera());
-				sentencia.setInt(9, car.getNroPrograma());
+				sentencia.setInt(4, car.getNroPrograma());
+				sentencia.setInt(5, nroTorneo);
+				sentencia.setInt(6, car.getNroCarrera());
+				sentencia.setInt(7, car.getNroPrograma());
+				sentencia.setInt(8, paginaInicio);
+				sentencia.setInt(9, nroPagina);
 			}
 			else
 			{
 				sentencia.setString(1, fecha);
 				sentencia.setInt(2, car.getNroCarrera());
-				sentencia.setInt(3, nroTorneo);
-				sentencia.setInt(4, car.getNroCarrera());
-				sentencia.setInt(5, car.getNroPrograma());
-				sentencia.setInt(6, nroTorneo);
-				sentencia.setInt(7, car.getNroCarrera());
-				sentencia.setInt(8, car.getNroPrograma());
+				sentencia.setInt(3, car.getNroPrograma());
+				sentencia.setInt(4, nroTorneo);
+				sentencia.setInt(5, car.getNroCarrera());
+				sentencia.setInt(6, car.getNroPrograma());
+				sentencia.setInt(7, paginaInicio);
+				sentencia.setInt(8, nroPagina);
 			}
 			rs = sentencia.executeQuery();
 			
@@ -184,16 +305,9 @@ public class CatalogoPreInscripcion {
 		
 		return listaNadadores;
 	}
-
+	
 	public ArrayList<Nadador> buscarNadadoresNoInscriptosACarreraIndividual(Carrera car, int nroTorneo, String fechaTorneo) 	
 	{	
-		//CON ESTE CRITERIO:
-		//TipoCarrera 6 -> Edad == 6
-		//TipoCarrera 7 -> Edad == 7
-		//...
-		//...
-		//TipoCarrera 14 -> Edad == 14
-		//TipoCarrera 15 -> Edad >= 15
 		
 		ArrayList<Nadador> listaNadadores = new ArrayList<Nadador>();
 		String sql;
@@ -205,7 +319,7 @@ public class CatalogoPreInscripcion {
 					+ "(SELECT n.dni FROM preinscripcionindividual nc "
 					+ "inner join nadador n on n.dni = nc.nroNadador "
 					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
-					+ "order by nroClub, apellido";
+					+ " order by nroClub, apellido";
 		}
 		else if (car.getTipoCarrera() < 13 && car.getTipoCarrera() >= 7)
 		{
@@ -214,7 +328,7 @@ public class CatalogoPreInscripcion {
 					+ "(SELECT n.dni FROM preinscripcionindividual nc "
 					+ "inner join nadador n on n.dni = nc.nroNadador "
 					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
-					+ "order by nroClub, apellido";
+					+ " order by nroClub, apellido";
 		}
 		else if(car.getTipoCarrera() == 13 || car.getTipoCarrera() == 14)
 		{
@@ -223,7 +337,7 @@ public class CatalogoPreInscripcion {
 					+ "(SELECT n.dni FROM preinscripcionindividual nc "
 					+ "inner join nadador n on n.dni = nc.nroNadador "
 					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
-					+ "order by nroClub, apellido";
+					+ " order by nroClub, apellido";
 		}
 		else
 		{
@@ -232,7 +346,7 @@ public class CatalogoPreInscripcion {
 					+ "(SELECT n.dni FROM preinscripcionindividual nc "
 					+ "inner join nadador n on n.dni = nc.nroNadador "
 					+ "where nroCarrera = ? and nroPrograma = ? and nroTorneo = ?) and sexo = (select sexo from carrera c where nroCarrera = ? and nroPrograma = ?)"
-					+ "order by nroClub, apellido";
+					+ " order by nroClub, apellido";
 		}
 		PreparedStatement sentencia=null;
 		ResultSet rs=null;
@@ -895,4 +1009,3 @@ public class CatalogoPreInscripcion {
 		
 		
 	}
-

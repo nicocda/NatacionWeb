@@ -255,5 +255,49 @@ public class CatalogoCarreras {
 		
 		return nroCarreraMaximo;
 	}
+	public Carrera buscarCarrera(int nroCarrera, int nroPrograma) 
+	{
+		Carrera car = new Carrera();
+		String sql="select * from carrera where nroCarrera=? and nroPrograma = ?";
+				PreparedStatement sentencia = null;
+		ResultSet rs= null;
+		Connection con = DataConnection.getInstancia().getConn();
+		try
+		{
+			sentencia= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			sentencia.setInt(1, nroCarrera);
+			sentencia.setInt(2, nroPrograma);
+			rs=sentencia.executeQuery();
+			if(rs.next())
+			{
+				car.setEstilo(rs.getString("estilo"));
+				car.setMetros(rs.getInt("metros"));
+				car.setNroCarrera(rs.getInt("nroCarrera"));
+				car.setNroPrograma(rs.getInt("nroPrograma"));
+				car.setSexo(rs.getString("sexo").charAt(0));
+				car.setTipoCarrera(rs.getInt("edadCarrera"));
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		 finally
+			{
+				try
+				{
+					if(sentencia!=null && !sentencia.isClosed())
+					{
+						sentencia.close();
+					}
+					DataConnection.getInstancia().CloseConn();
+				}
+				catch (SQLException sqle)
+				{
+					sqle.printStackTrace();
+				}
+			}		
+		return car;
+	}
 }
 

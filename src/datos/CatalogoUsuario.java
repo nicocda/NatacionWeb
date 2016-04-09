@@ -30,12 +30,13 @@ public class CatalogoUsuario {
 	}
 	
 	
-	public boolean buscarUsuario(String usuario, String password) 
+	public Usuario buscarUsuario(String usuario, String password) 
 	{
 		String sql = "select * from usuario where usuario = ? and password = ? ";
 		PreparedStatement sentencia=null;
 		ResultSet rs=null;
 		Connection con = DataConnection.getInstancia().getConn();
+		Usuario usuarioActual = null;
 		
 		try
 		{
@@ -47,8 +48,10 @@ public class CatalogoUsuario {
 			
 			if(rs.next())
 			{			
-				
-				return true;
+				usuarioActual = new Usuario();
+				usuarioActual.setUsuario(rs.getString("usuario"));
+				usuarioActual.setContraseña(rs.getString("password"));
+				usuarioActual.setTipoUsuario(Integer.parseInt(rs.getString("tipoUsuario")));
 			}
 			
 				
@@ -72,7 +75,7 @@ public class CatalogoUsuario {
 				sqle.printStackTrace();
 			}
 		}
-		return false;
+		return usuarioActual;
 	}
 	
 	

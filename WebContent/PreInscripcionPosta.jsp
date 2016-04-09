@@ -1,147 +1,159 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"
+    import="java.util.ArrayList"
+    import="entidades.Carrera"
+    import="entidades.Nadador"
+    import="entidades.Usuario"
+    import="util.TipoUsuarios"
+    import="entidades.NadadorCarreraPosta"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<title>PreInscripcion a Carrera por Posta</title>
-
-<!-- Bootstrap Core CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-
-<!-- Custom CSS -->
-
-<link rel="stylesheet" href="css/miestilo.css">
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Pre Inscripcion por Postas</title>
 </head>
-
 <body>
-	<%@ include file = "PaginaPpal.jsp" %>
+	<%@ include file = "Header.jsp"%>
+<div id = "wrapper">
 
-	<section id="wrap">
-		<section id="wrapper">
-
+	<%@ include file = "SideBarMenu.jsp"%>
+<div id="main-wrapper" class="col-md-11 pull-right">
+		<div id="main">
+	   	  	<%if (usuarioActual.getTipoUsuario() == TipoUsuarios.ADMIN.ordinal()+1 || usuarioActual.getTipoUsuario() == TipoUsuarios.MANAGER.ordinal()+1) 
+	   	  	{ %>
+				<div class = "row">
+	
+				<form name="form" action="PreInscripcionPosta" method="post">
+					<div class='col-lg-12'>
+						
+						<br> <label>Carrera: &nbsp;&nbsp;</label>
+						<select name = "cbCarrera" class = "comboBox" <%if(session.getAttribute("carrera") != null) {%> value="<%=session.getAttribute("carrera")%>"<% } %>>
+						<option selected disabled><<--Seleccione una carrera de la lista -->></option>
+						<% ArrayList<Carrera> carreras = (ArrayList<Carrera>) session.getAttribute("carreras");
+						for(Carrera car : carreras)
+						{ %>
+							<option value="<%=car.getNroCarrera()%>"><%=car %></option>
+						<%}
+						%>
+						</select>
+						<button class="boton-pers" type="submit" name="selCarrera">Seleccionar Carrera</button>
+					</div>
+				
+					<div class='col-md-6'>
+							<h3>Nadadores no Inscriptos</h3>
+								<select multiple name="nadadores" size="8">
+										<%
+										Nadador equipo[];
+										equipo = (Nadador[])session.getAttribute("equipo");
+										ArrayList<Nadador> nadadores = (ArrayList<Nadador>) session.getAttribute("nadadores");
+										if(session.getAttribute("nadadores")!=null)
+										{
+											for(Nadador n : nadadores)
+											{ 
+												if(equipo!=null)
+												{	
+													boolean bandera=false;
+													for(int i=0;i<4;i++)
+													{	
+														if(equipo[i] != null)
+														{
+															if(equipo[i].getDni()==n.getDni())
+															{
+																 bandera= true;
+															}
+														}
+													}
+													if(bandera==false)
+													{
+														 %><option value="<%=n.getDni() %>"><%=n %></option> <%
+													}
+												}else {
+													 %><option value="<%=n.getDni() %>"><%=n %></option><%
+												}
+											}
+										} %>
+								</select>
+								<button class="boton-pers" type="submit" name="selNadador">Seleccionar Nadador</button>
+					</div>
+					<div class='col-md-6'>
+					<h3>Equipo</h3>
+						<%	if(session.getAttribute("equipo")!= null)
+								{
+									for(int i=0;i<equipo.length;i++)
+									{
+										%>
+										<label>Nadador <%=i+1 %>: </label>
+									<% if(equipo[i]==null) {%>
+									<label>Seleccione un Nadador</label>
+									<%} else { %>
+									<label><%=equipo[i] %></label><% 
+											 }
+											 if(equipo[i]!= null)
+											 {%>
+									<button class="boton-pers" type="submit" name="<%=i%>">Quitar</button>
+									
+								<% 			 }%>
+								<br>
+								<%}
+										if(equipo[0]!=null && equipo[1]!=null && equipo[2]!=null && equipo[3]!=null)
+										{%>
+											<button class="boton-pers" type="submit" name="addEquipo">AgregarEquipo</button>
+								<%	}
+								}%>
+					</div>
 			
-			<!-- /#sidebar-wrapper -->
-
-			<!-- Page Content -->
-
-
-			<form>
-				<div class='col-lg-9'>
-					<label>Torneo: &nbsp;&nbsp;</label> <select><option>torneo1</option></select>
-					<br> <label>Carrera: &nbsp;&nbsp;</label><select><option>Carrera1</option></select>
-
-				</div>
-				<div class='col-lg-3'>
-					<button class="boton-pers">Cambiar Torneo</button>
-				</div>
-				<br>
-				<div class='col-md-6'>
-					<table>
-						<tr>
-							<td><button class="boton-pers">Seleccionar Nadador</button></td>
-							<td><h3>Nadadores no Inscriptos</h3></td>
-						</tr>
-						<tr>
-							<td colspain="2"><select multiple>
-									<option>Soy un Nadador HOLA</option>
-							</select></td>
-						</tr>
-					</table>
-				</div>
-				<div class='col-md-6'>
-					<table>
-						<tr>
-							<td colspain="3"><h3>Equipo</h3></td>
-						</tr>
-						<tr>
-							<td><label>Nadador 1: </label></td>
-							<td><label>Seleccione un Nadador</label></td>
-							<td><button class="boton-pers">Quitar</button></td>
-						</tr>
-						<tr>
-							<td><label>Nadador 2: </label></td>
-							<td><label>Seleccione un Nadador</label></td>
-							<td><button class="boton-pers">Quitar</button></td>
-						</tr>
-						<tr>
-							<td><label>Nadador 3: </label></td>
-							<td><label>Seleccione un Nadador</label></td>
-							<td><button class="boton-pers">Quitar</button></td>
-						</tr>
-						<tr>
-							<td><label>Nadador 4: </label></td>
-							<td><label>Seleccione un Nadador</label></td>
-							<td><button class="boton-pers">Quitar</button></td>
-						</tr>
-						<tr>
-							<td colspain="3"><button class="boton-pers">Agregar
-									Equipo</button></td>
-						</tr>
-					</table>
-				</div>
-				<div class='col-sm-12'>
-					<table>
-						<tr>
-							<td><h3>Equipos Inscriptos</h3></td>
-						</tr>
-						<tr>
+				<div class='col-lg-12'>
+				<%ArrayList<NadadorCarreraPosta> equipoInsc = (ArrayList<NadadorCarreraPosta>)session.getAttribute("InscEquipo");
+			if(equipoInsc != null) 
+			{
+				if(!equipoInsc.isEmpty())
+				{%>
+							<h3>Equipos Inscriptos</h3>
 							<table border="1">
 								<tr>
 									<th>Nadador 1</th>
 									<th>Nadador 2</th>
 									<th>Nadador 3</th>
 									<th>Nadador 4</th>
-									<th>Club</th>
 								</tr>
-								<tr>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-								</tr>
-							</table>
-						</tr>
-						<tr colspain="5">
-							<button class="boton-pers">Quitar Equipo</button>
-						</tr>
-						<tr colspain="4">&nbsp;
-						</tr>
-						<tr>
-							<button class="boton-pers">Generar Serie</button>
-						</tr>
+										<%
+											for(NadadorCarreraPosta team : equipoInsc)
+											{%>
+										<tr>
+											<td><%= team.getDniNadador1() %></td>
+											<td><%= team.getDniNadador2() %></td>
+											<td><%= team.getDniNadador3() %></td>
+											<td><%= team.getDniNadador4() %></td>
+										</tr>
+									<%		}	%>
+										
+			 	 <%}else
+			 	 {%>
+			 		<tr>
+					<td>&nbsp</td><td>&nbsp</td><td>&nbsp</td><td>&nbsp</td>
+				</tr>
+				
+			 	<% }%>
+			 	<div><button class="boton-pers" name="quitarEquipo">Quitar Equipo</button>
+				<button class="boton-pers" name="genSerie">Generar Serie</button></div>
+			 	</table>
+			 <%}%>
+					</div>
+				</form>
+</div>
 
-					</table>
-				</div>
-			</form>
+	<%} 
+	else
+	{%>
+		<p>El usuario no dispone de suficientes permisos para ingresar en esta página</p>
+	<%}%>
 
-
-
-
-
-
+</div>
+</div>
+</div>
 			<!-- /#page-content-wrapper -->
 
 
-		</section>
-
-
-
-	</section>
 
 
 	<!-- /#wrapper -->
@@ -161,5 +173,4 @@
     </script>
 
 </body>
-
 </html>

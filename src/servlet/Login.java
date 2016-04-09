@@ -14,43 +14,32 @@ import javax.servlet.http.HttpSession;
 import entidades.Usuario;
 import negocio.ControladorNatacion;
 
-/**
- * Servlet implementation class Login
- */
 @WebServlet("/login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ControladorNatacion cn = new ControladorNatacion();
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Login() {
+
+    public Login() 
+    {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		String usuario = request.getParameter("login");
 		String password = request.getParameter("password");
 		
 		
-			boolean ingreso = cn.buscarUsuario(usuario, password);
-			if(ingreso)
+			Usuario usuarioActual = ControladorNatacion.getInstance().buscarUsuario(usuario, password);
+			if(usuarioActual != null)
 			{
 				//inicializo la sesion
 				HttpSession session = request.getSession(true);
-				session.setAttribute("existeUsuario", ingreso);
+				session.setAttribute("usuarioActual", usuarioActual);
 				request.getRequestDispatcher("PaginaPpal.jsp").forward(request, response);
 			}
 			else
@@ -61,3 +50,4 @@ public class Login extends HttpServlet {
 	}
 
 }
+

@@ -30,31 +30,32 @@
 </head>
 
 <body>
-	<%@ include file = "PaginaPpal.jsp" %>
+	<%@ include file = "Header.jsp"%>
+<div id = "wrapper">
 
-	<section id="wrap"> <section id="wrapper"> <!-- Sidebar -->
-	
+	<%@ include file = "SideBarMenu.jsp"%>
 
-	<div class="row">
-
-		<div class="col-md-12">
+	<div id="main-wrapper" class="col-md-11 pull-right">
+	            <div id="main">
+	             <div class="page-header">
+		                <h3><label>Seleccione un Torneo con el cual trabajar:</label></h3>
+		              </div>
 
 			<form action="btnDefinirTorneo" method="POST" name="formTorneo">
 				<% ArrayList<Torneo> listaTorneos =(ArrayList<Torneo>) session.getAttribute("listaTorneos"); %>
-				<label>Seleccione un Torneo con el cual trabajar:</label> <select
-					id="torneo" name="torneo">
+ 				<select class="comboBox" id="torneo" name="torneo">
 					<% for(int i=0; i < listaTorneos.size(); i++)
                     	{
                     	%>
-					<option value="<%= listaTorneos.get(i).toString() %>"><%= listaTorneos.get(i).toString() %></option>
+					<option value="<%= listaTorneos.get(i).getNroTorneo() %>"><%= listaTorneos.get(i).toString() %></option>
 					<%
                     	}
                         %>
 				</select> <label>El torneo que elija sera utilizado por defecto en el
 					programa para el resto de los modulos, puede optar por no elegir un
 					torneo, y se deshabilitaran algunos de los modulos</label> <br>
-				<button class="boton-pers">No elegir Torneo</button>
-				<input class="boton-pers" type="submit" value="Elegir Torneo">
+				
+				<input class="botones" type="submit" value="Elegir Torneo">
 
 
 			</form>
@@ -63,7 +64,7 @@
 
 	</div>
 
-	</section> </section>
+	</div>
 
 	<!-- /#sidebar-wrapper -->
 

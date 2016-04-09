@@ -100,7 +100,7 @@ public class CatalogoTorneos {
 	public ArrayList<Torneo> buscarTorneos()
 	{
 		ArrayList<Torneo> lt = new ArrayList<Torneo>();
-		String sql="Select * from torneo";
+		String sql="Select * from torneo t inner join club c on c.nroClub=t.nroClub";
 		Statement sentencia = null;
 		ResultSet rs = null;
 		Connection con = DataConnection.getInstancia().getConn();
@@ -116,6 +116,55 @@ public class CatalogoTorneos {
 				t.setNroClub(rs.getInt("nroClub"));
 				t.setNroPrograma(rs.getInt("nroPrograma"));
 				t.setFecha(stringCorto);
+				t.setNombreClub(rs.getString("nombre"));
+				lt.add(t);
+			}
+		}
+		catch(SQLException | ParseException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(sentencia!=null && !sentencia.isClosed())
+				{
+					sentencia.close();
+				}
+				DataConnection.getInstancia().CloseConn();
+			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}		
+		return lt;
+	}
+	
+	public ArrayList<Torneo> buscarTorneos(int paginaInicio, int nroPorPagina)
+	{
+		ArrayList<Torneo> lt = new ArrayList<Torneo>();
+		String sql="Select * from Torneo t inner join club c on c.nroClub=t.nroClub limit ? , ? ";
+		PreparedStatement sentencia=null;
+		ResultSet rs = null;
+		Connection con = DataConnection.getInstancia().getConn();
+		try
+		{
+			sentencia= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			sentencia.setInt(1, paginaInicio);
+			sentencia.setInt(2, nroPorPagina);
+			rs=sentencia.executeQuery();
+			while(rs.next())
+			{
+				Torneo t = new Torneo();
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("fechaTorneo"));
+				String stringCorto = new SimpleDateFormat("dd/MM/yyyy").format(date);
+				t.setNroTorneo(rs.getInt("nroTorneo"));
+				t.setNroClub(rs.getInt("nroClub"));
+				t.setNroPrograma(rs.getInt("nroPrograma"));
+				t.setFecha(stringCorto);
+				t.setNombreClub(rs.getString("nroClub"));
 				lt.add(t);
 			}
 		}
@@ -163,7 +212,7 @@ public class CatalogoTorneos {
 		return max;
 	}
 	public Torneo buscarTorneo(int nroTorneo) {
-		String sql="select * from torneo where nroTorneo=?";
+		String sql="select * from torneo t inner join club c on c.nroClub=t.nroClub where nroTorneo=? ";
 		PreparedStatement sentencia= null;
 		Connection con= DataConnection.getInstancia().getConn();
 		ResultSet rs = null;
@@ -175,13 +224,16 @@ public class CatalogoTorneos {
 			rs=sentencia.executeQuery();
 			if(rs.next())
 			{
-				t.setFecha(rs.getString("fechaTorneo"));
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(rs.getString("fechaTorneo"));
+				String stringCorto = new SimpleDateFormat("dd/MM/yyyy").format(date);
+				t.setNroTorneo(rs.getInt("nroTorneo"));
 				t.setNroClub(rs.getInt("nroClub"));
 				t.setNroPrograma(rs.getInt("nroPrograma"));
-				t.setNroTorneo(nroTorneo);
+				t.setNombreClub(rs.getString("nombre"));
+				t.setFecha(stringCorto);
 			}
 		}
-		catch(SQLException e)
+		catch(SQLException | ParseException e)
 		{
 			e.printStackTrace();
 		}
@@ -201,5 +253,43 @@ public class CatalogoTorneos {
 			}
 		}
 		return t;
+	}
+	public void modificarTorneo(int nroTorneo, String fecha, int nroPrograma, int nroClub)
+	{
+		String sql = "UPDATE torneo set fechaTorneo=?, nroClub=?, nroPrograma=? where nroTorneo=? ";
+		PreparedStatement sentencia = null;
+		Connection con = DataConnection.getInstancia().getConn();
+		try
+		{
+			sentencia= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			
+			Date date = new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
+			String fechaLarga = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+			
+			sentencia.setString(1, fechaLarga);
+			sentencia.setInt(2, nroClub);
+			sentencia.setInt(3, nroPrograma);
+			sentencia.setInt(4, nroTorneo);
+			sentencia.executeUpdate();
+		}
+		catch(SQLException | ParseException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(sentencia!=null && !sentencia.isClosed())
+				{
+					sentencia.close();
+				}
+				DataConnection.getInstancia().CloseConn();
+			}
+			catch (SQLException sqle)
+			{
+				sqle.printStackTrace();
+			}
+		}		
 	}
 }

@@ -5,6 +5,33 @@ import java.sql.Time;
 public class Inscripcion 
 {
 	private int nroNadador, nroNadador2, nroNadador3, nroNadador4, nroAndarivel, nroSerie, nroCarrera, nroPrograma, nroTorneo;
+	private String nombreApellidoNadador, nombreApellidoNadador2,nombreApellidoNadador3,nombreApellidoNadador4;
+	private String motivoDescalificacion, tiempoCompeticion;
+	
+	
+	public String toString()
+	{
+		if(tiempoCompeticion != "00:null")
+		{
+			if(nroCarrera<=40){
+				return this.nroAndarivel+"  "+this.nombreApellidoNadador;
+			}else
+			{
+				return this.nroAndarivel+"  "+this.nombreApellidoNadador+"  "+this.nombreApellidoNadador2+"  "+this.nombreApellidoNadador3+"  "+this.nombreApellidoNadador4;
+			}
+		}
+		else
+		{
+			if(nroCarrera<=40){
+				return this.nombreApellidoNadador+" "+this.tiempoCompeticion;
+			}else
+			{
+				return this.nombreApellidoNadador+"  "+this.nombreApellidoNadador2+"  "+this.nombreApellidoNadador3+"  "+this.nombreApellidoNadador4+" "+this.tiempoCompeticion;
+			}
+		}
+		
+	}
+	
 	public int getNroNadador2() {
 		return nroNadador2;
 	}
@@ -53,7 +80,7 @@ public class Inscripcion
 	public void setTiempoCompeticion(String tiempoCompeticion) {
 		this.tiempoCompeticion = tiempoCompeticion;
 	}
-	private String motivoDescalificacion, tiempoCompeticion;
+
 	
 	public int getNroNadador() {
 		return nroNadador;
@@ -72,5 +99,35 @@ public class Inscripcion
 	}
 	public void setNroSerie(int nroSerie) {
 		this.nroSerie = nroSerie;
+	}
+	public String getNombreApellidoNadador() {
+		return nombreApellidoNadador;
+	}
+	public void setNombreApellidoNadador(String nombreApellidoNadador) {
+		this.nombreApellidoNadador = nombreApellidoNadador;
+	}
+
+	public String getNombreApellidoNadador2() {
+		return nombreApellidoNadador2;
+	}
+
+	public void setNombreApellidoNadador2(String nombreApellidoNadador2) {
+		this.nombreApellidoNadador2 = nombreApellidoNadador2;
+	}
+
+	public String getNombreApellidoNadador3() {
+		return nombreApellidoNadador3;
+	}
+
+	public void setNombreApellidoNadador3(String nombreApellidoNadador3) {
+		this.nombreApellidoNadador3 = nombreApellidoNadador3;
+	}
+
+	public String getNombreApellidoNadador4() {
+		return nombreApellidoNadador4;
+	}
+
+	public void setNombreApellidoNadador4(String nombreApellidoNadador4) {
+		this.nombreApellidoNadador4 = nombreApellidoNadador4;
 	}
 }
